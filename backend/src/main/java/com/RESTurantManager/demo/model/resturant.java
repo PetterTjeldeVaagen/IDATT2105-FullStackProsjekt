@@ -2,7 +2,7 @@ package com.RESTurantManager.demo.model;
 
 import java.util.ArrayList;
 
-public class resturant {
+public class Resturant {
     private String name;
     private int resturantId;
     private ArrayList<Employee> employees;
@@ -11,7 +11,7 @@ public class resturant {
     private ArrayList<String> categories;
     private ArrayList<Deviation> registeredDeviations;
     
-    public resturant(String name, int resturantId, Employee manager) {
+    public Resturant(String name, int resturantId, Employee manager) {
         this.name = name;
         this.resturantId = resturantId;
         this.employees = new ArrayList<>();

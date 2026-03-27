@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Deviation {
     private String name;
-    private int deviationId;
+    private final int deviationId;
     private String description;
     private Employee registeredBy;
     private Date dateRegistered;

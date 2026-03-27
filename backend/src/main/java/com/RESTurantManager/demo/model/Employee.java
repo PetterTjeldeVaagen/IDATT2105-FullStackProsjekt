@@ -8,13 +8,15 @@ public class Employee {
     private String email;
     private String phoneNumber;
     private ArrayList<Course> training;
+    private String role;
     
-    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training) {
+    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role) {
         this.name = name;
         this.employeeId = employeeId;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.training = training;
+        this.role = role;
     }
 
     public String getName() {
@@ -59,5 +61,13 @@ public class Employee {
 
     public void addCourse(Course course) {
         this.training.add(course);
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
