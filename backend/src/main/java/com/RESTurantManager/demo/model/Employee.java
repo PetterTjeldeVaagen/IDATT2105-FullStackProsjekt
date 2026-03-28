@@ -9,14 +9,19 @@ public class Employee {
     private String phoneNumber;
     private ArrayList<Course> training;
     private String role;
+    private int resturantId;
+    private String password;
     
-    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role) {
+    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role, String password, int resturantId) {
         this.name = name;
         this.employeeId = employeeId;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.training = training;
         this.role = role;
+        this.password = password;
+        this.resturantId = resturantId;
+
     }
 
     public String getName() {
@@ -69,5 +74,21 @@ public class Employee {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getResturantId() {
+        return resturantId;
+    }
+
+    public void setResturantId(int resturantId) {
+        this.resturantId = resturantId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

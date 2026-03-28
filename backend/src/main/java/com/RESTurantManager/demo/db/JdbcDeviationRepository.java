@@ -16,12 +16,12 @@ public class JdbcDeviationRepository implements DeviationRepository {
     @Override
     public void save(Deviation deviation) {
         jdbcTemplate.update(
-                "INSERT INTO deviations (name, deviation_id, description, registered_by, date_registered) VALUES (?, ?, ?, ?, ?)",
-                deviation.getName(),
-                deviation.getDeviationId(),
-                deviation.getDescription(),
-                deviation.getRegisteredBy().getEmployeeId(),
-                deviation.getDateRegistered()
+            "INSERT INTO deviations (title, deviation_id, description, registered_by, date_registered) VALUES (?, ?, ?, ?, ?)",
+            deviation.getName(),
+            deviation.getDeviationId(),
+            deviation.getDescription(),
+            deviation.getRegisteredBy() != null ? deviation.getRegisteredBy().getEmployeeId() : null,
+            deviation.getDateRegistered()
         );
     }
 

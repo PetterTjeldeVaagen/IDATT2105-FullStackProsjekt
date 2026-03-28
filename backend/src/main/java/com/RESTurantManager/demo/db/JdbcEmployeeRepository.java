@@ -16,12 +16,14 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     @Override
     public void save(Employee employee) {
         jdbcTemplate.update(
-                "INSERT INTO employees (employee_id, name, role, email, phone_number) VALUES (?, ?, ?, ?, ?)",
-                employee.getEmployeeId(),
-                employee.getName(),
-                employee.getRole(), 
-                employee.getEmail(),
-                employee.getPhoneNumber()
+            "INSERT INTO employees (employee_id, name, role, email, password, phone_number, resturant_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            employee.getEmployeeId(),
+            employee.getName(),
+            employee.getRole(),
+            employee.getEmail(),
+            employee.getPassword(),
+            employee.getPhoneNumber(),
+            employee.getResturantId()
         );
     }
 

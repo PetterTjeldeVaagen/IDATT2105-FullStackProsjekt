@@ -16,15 +16,16 @@ public class JdbcTaskRepository implements TaskRepository {
     @Override
     public void save(Task task) {
         jdbcTemplate.update(
-                "INSERT INTO tasks (name, task_id, description, assigned_to, due_date, recurring, recurring_frequency) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                task.getTaskName(),
-                task.getTaskId(),
-                task.getDescription(),
-                task.getAssignedTo().getEmployeeId(),
-                task.getFinishBy(),
-                task.getRecurring(),
-                task.getRecurringFrequency(),
-                task.getStatus()
+            "INSERT INTO tasks (name, task_id, description, assigned_to, due_date, category, status, recurring, recurring_frequency) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            task.getTaskName(),
+            task.getTaskId(),
+            task.getDescription(),
+            task.getAssignedTo() != null ? task.getAssignedTo().getEmployeeId() : null,
+            task.getFinishBy(),
+            task.getCategory(),
+            task.getStatus(),
+            task.getRecurring(),
+            task.getRecurringFrequency()
         );
     }
 

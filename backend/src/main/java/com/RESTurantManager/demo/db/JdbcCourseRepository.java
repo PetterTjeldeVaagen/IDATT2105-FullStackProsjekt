@@ -28,7 +28,7 @@ public class JdbcCourseRepository implements CourseRepository {
     @Override
     public Course findById(int id) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM courses WHERE id = ?",
+                "SELECT * FROM courses WHERE course_id = ?",
                 new BeanPropertyRowMapper<>(Course.class),
                 id
         );
@@ -36,6 +36,6 @@ public class JdbcCourseRepository implements CourseRepository {
 
     @Override
     public void deleteById(int id) {
-        jdbcTemplate.update("DELETE FROM courses WHERE id = ?", id);
+        jdbcTemplate.update("DELETE FROM courses WHERE course_id = ?", id);
     }
 }

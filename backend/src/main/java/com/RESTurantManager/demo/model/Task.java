@@ -11,8 +11,9 @@ public class Task {
     private Boolean recurring;
     private Employee assignedTo;
     private Boolean status;
-
-    public Task(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo) {
+    private String category;
+    
+    public Task(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
         this.taskName = taskName;
         this.taskId = taskId;
         this.description = description;
@@ -21,6 +22,7 @@ public class Task {
         this.recurring = recurring;
         this.assignedTo = assignedTo;
         this.status = false;
+        this.category = category;
     }
 
     public String getTaskName() {
@@ -85,5 +87,13 @@ public class Task {
 
     public void setRecurringFrequency(RecurringFrequency recurringFrequency) {
         this.recurringFrequency = recurringFrequency;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
