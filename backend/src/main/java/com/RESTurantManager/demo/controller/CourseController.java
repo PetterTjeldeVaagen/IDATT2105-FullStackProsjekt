@@ -23,23 +23,24 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/createCourse")
     public ResponseEntity<CourseResponse> createCourse(@RequestBody CourseRequest courseRequest) {
         Course course = new Course(courseRequest.getName(), courseRequest.getCourseId(), 
                                     courseRequest.getCompletionDate(), courseRequest.getExpirationDate(), 
                                     courseRequest.getDocumentation(), courseRequest.getDescription(),
                                     courseRequest.getEmployeeId());
-        CourseResponse response = courseService.createCourse(course);
-        return ResponseEntity.ok(response);
+
+        courseService.createCourse(course);
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/deleteCourse")
     public ResponseEntity<CourseResponse> deleteCourse(@RequestBody int courseId) {
-        CourseResponse response = courseService.deleteCourseById(courseId);
-        return ResponseEntity.ok(response);
+        courseService.deleteCourseById(courseId);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getCourse")
     public ResponseEntity<Course> getCourse(@RequestBody int courseId) {
         Course course = courseService.getCourseById(courseId);
         return ResponseEntity.ok(course);

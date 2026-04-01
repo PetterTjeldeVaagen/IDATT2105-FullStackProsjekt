@@ -1,15 +1,17 @@
 package com.RESTurantManager.demo.db.requests;
 
+import java.util.Date;
+
 public class DeviationRequest {
     private String description;
-    private String date;
+    private Date date;
     private String title;
     private int deviationId;
     private int registeredBy;
 
     public DeviationRequest() { }
 
-    public DeviationRequest(String description, String date, String title, int registeredBy, int deviationId) {
+    public DeviationRequest(String description, Date date, String title, int registeredBy, int deviationId) {
         this.description = description;
         this.date = date;
         this.title = title;
@@ -25,11 +27,11 @@ public class DeviationRequest {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

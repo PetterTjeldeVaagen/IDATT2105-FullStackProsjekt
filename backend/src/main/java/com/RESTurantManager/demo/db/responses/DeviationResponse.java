@@ -6,8 +6,13 @@ public class DeviationResponse {
     private String title;
     private int deviationId;
     private int registeredBy;
+    private String response;
 
     public DeviationResponse() { }
+
+    public DeviationResponse(String response) {
+        this.response = response;
+    }
 
     public DeviationResponse(String description, String date, String title, int registeredBy, int deviationId) {
         this.description = description;
@@ -55,6 +60,14 @@ public class DeviationResponse {
 
     public void setRegisteredBy(int registeredBy) {
         this.registeredBy = registeredBy;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 
 }
