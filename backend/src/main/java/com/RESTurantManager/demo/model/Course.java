@@ -9,13 +9,17 @@ public class Course {
     private Date dateCompleted;
     private Date dateExpires;
     private File documentation;
+    private String description;
+    private int employeeId;
 
-    public Course(String name, int courseId, Date dateCompleted, Date dateExpires, File documentation) {
+    public Course(String name, int courseId, Date dateCompleted, Date dateExpires, File documentation, String description, int employeeId) {
         this.name = name;
         this.courseId = courseId;
         this.dateCompleted = dateCompleted;
         this.dateExpires = dateExpires;
         this.documentation = documentation;
+        this.description = description;
+        this.employeeId = employeeId;
     }
 
     public String getName() {
@@ -56,5 +60,21 @@ public class Course {
 
     public void setDocumentation(File documentation) {
         this.documentation = documentation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 }

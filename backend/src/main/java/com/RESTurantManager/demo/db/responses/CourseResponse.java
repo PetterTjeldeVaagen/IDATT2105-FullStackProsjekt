@@ -8,8 +8,13 @@ public class CourseResponse {
     private int employeeId;
     private Date completionDate;
     private Date expirationDate;
+    private String response;
 
     public CourseResponse() { }
+
+    public CourseResponse(String response){
+        this.response = response;
+    }
 
     public CourseResponse(String name, String description, int employeeId, Date completionDate, Date expirationDate) {
         this.name = name;
@@ -57,5 +62,13 @@ public class CourseResponse {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }
