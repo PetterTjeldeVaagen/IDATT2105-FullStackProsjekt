@@ -41,9 +41,11 @@ public class CourseController {
     }
 
     @GetMapping("/getCourse")
-    public ResponseEntity<Course> getCourse(@RequestBody int courseId) {
+    public ResponseEntity<CourseResponse> getCourse(@RequestBody int courseId) {
         Course course = courseService.getCourseById(courseId);
-        return ResponseEntity.ok(course);
+        CourseResponse courseResponse = new CourseResponse(course.getName(), course.getDescription(), 
+                                                           course.getEmployeeId(), course.getDateCompleted(), course.getDateExpires());
+        return ResponseEntity.ok(courseResponse);
     }
     
 }

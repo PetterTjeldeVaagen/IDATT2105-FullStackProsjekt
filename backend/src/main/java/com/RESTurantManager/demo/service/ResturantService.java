@@ -43,4 +43,8 @@ public class ResturantService {
         return resturantRepository.getResturantIdByEmployeeId(employeeId);
     }
 
+    public void createResturant(String name, int resturantId, int managerId) {
+        resturantRepository.createResturant(name, resturantId, managerId);
+    }
+
 }

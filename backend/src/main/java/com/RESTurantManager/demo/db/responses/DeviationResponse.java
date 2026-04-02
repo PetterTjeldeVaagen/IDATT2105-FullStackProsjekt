@@ -1,8 +1,10 @@
 package com.RESTurantManager.demo.db.responses;
 
+import java.util.Date;
+
 public class DeviationResponse {
     private String description;
-    private String date;
+    private Date date;
     private String title;
     private int deviationId;
     private int registeredBy;
@@ -14,7 +16,7 @@ public class DeviationResponse {
         this.response = response;
     }
 
-    public DeviationResponse(String description, String date, String title, int registeredBy, int deviationId) {
+    public DeviationResponse(String description, Date date, String title, int registeredBy, int deviationId) {
         this.description = description;
         this.date = date;
         this.title = title;
@@ -30,11 +32,11 @@ public class DeviationResponse {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

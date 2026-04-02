@@ -18,4 +18,6 @@ public interface ResturantRepository {
     void removeManagerFromResturant(int resturantId, int managerId);
 
     int getResturantIdByEmployeeId(int employeeId);
+
+    void createResturant(String name, int resturantId, int managerId);
 }

@@ -33,7 +33,9 @@ public class DeviationController {
         Deviation deviation = new Deviation(deviationRequest.getTitle(),deviationRequest.getDeviationId(), deviationRequest.getDescription(), 
                                             employee, deviationRequest.getDate());
         deviationService.createDeviation(deviation);
-        return ResponseEntity.ok().build();
+        DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
+                                                                    deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
+        return ResponseEntity.ok(deviationResponse);
     }
 
     @PutMapping("/deleteDeviation")
@@ -43,8 +45,10 @@ public class DeviationController {
     }
 
     @GetMapping("/getDeviation")
-    public ResponseEntity<Deviation> getDeviation(@RequestBody int deviationId) {
+    public ResponseEntity<DeviationResponse> getDeviation(@RequestBody int deviationId) {
         Deviation deviation = deviationService.getDeviationById(deviationId);
-        return ResponseEntity.ok(deviation);
+        DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
+                                                                    deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
+        return ResponseEntity.ok(deviationResponse);
     }
 }
