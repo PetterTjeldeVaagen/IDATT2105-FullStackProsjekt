@@ -28,9 +28,6 @@ public class ResturantController {
         this.employeeService = employeeService;
     }
 
-    //rsturant: String name, int resturantId, Employee manager
-    //resturant response: String name, int resturantId
-
     @GetMapping("/getEmployees")
     public ResponseEntity<ArrayList<Employee>> getEmployeesByResturantId(@RequestBody ResturantRequest resturantRequest) {
         ArrayList<Employee> employees = resturantService.getEmployeesByResturantId(resturantRequest.getResturantId());
@@ -51,13 +48,13 @@ public class ResturantController {
 
     @PutMapping("/addEmployee")
     public ResponseEntity<Void> addEmployeeToResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.addEmployeeToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getManagerId()));
+        resturantService.addEmployeeToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/removeEmployee")
     public ResponseEntity<Void> removeEmployeeFromResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.removeEmployeeFromResturant(resturantRequest.getResturantId(), resturantRequest.getManagerId());
+        resturantService.removeEmployeeFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
         return ResponseEntity.ok().build();
     }
 
@@ -75,7 +72,7 @@ public class ResturantController {
 
     @GetMapping("/getResturantIdByEmployeeId")
     public ResponseEntity<ResturantResponse> getResturantIdByEmployeeId(@RequestBody ResturantRequest resturantRequest) {
-        int resturantId = resturantService.getResturantIdByEmployeeId(resturantRequest.getManagerId());
+        int resturantId = resturantService.getResturantIdByEmployeeId(resturantRequest.getEmployeeId());
         ResturantResponse resturantResponse = new ResturantResponse(resturantRequest.getName(), resturantId);
         return ResponseEntity.ok(resturantResponse);
     }

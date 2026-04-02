@@ -13,12 +13,12 @@ public class TaskResponse {
     private RecurringFrequency recurringFrequency;
     private Boolean recurring;
     private Employee assignedTo;
-    private Boolean status;
+    private String status;
     private String category;
 
     public TaskResponse() { }
 
-    public TaskResponse(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, Boolean status, String category) {
+    public TaskResponse(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String status, String category) {
         this.taskName = taskName;
         this.taskId = taskId;
         this.description = description;
@@ -86,11 +86,11 @@ public class TaskResponse {
         this.assignedTo = assignedTo;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -1,5 +1,3 @@
-USE RESTurant_Manager_db;
-
 INSERT INTO resturants (name, location)
 SELECT 'Egon Trondheim', 'Trondheim'
 WHERE NOT EXISTS (
@@ -39,7 +37,7 @@ WHERE r.name = 'Sabrura Solsiden' AND r.location = 'Trondheim'
   );
 
 INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency)
-SELECT 'Vask kjølerom', 'Grundig vask av kjølerom', e.employee_id, CURDATE(), 'Renhold', 'PENDING', TRUE, 'WEEKLY'
+SELECT 'Vask kjølerom', 'Grundig vask av kjølerom', e.employee_id, CURRENT_DATE, 'Renhold', 'PENDING', TRUE, 'WEEKLY'
 FROM employees e
 WHERE e.email = 'ola@test.no'
   AND NOT EXISTS (
@@ -48,7 +46,7 @@ WHERE e.email = 'ola@test.no'
   );
 
 INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency)
-SELECT 'Sjekk brannslukker', 'Kontroller brannslukker', e.employee_id, DATE_ADD(CURDATE(), INTERVAL 3 DAY), 'Sikkerhet', 'DONE', FALSE, NULL
+SELECT 'Sjekk brannslukker', 'Kontroller brannslukker', e.employee_id, DATEADD('DAY', 3, CURRENT_DATE), 'Sikkerhet', 'DONE', FALSE, NULL
 FROM employees e
 WHERE e.email = 'kari@test.no'
   AND NOT EXISTS (

@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS RESTurant_Manager_db;
-USE RESTurant_Manager_db;
-
 CREATE TABLE IF NOT EXISTS resturants (
     resturant_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

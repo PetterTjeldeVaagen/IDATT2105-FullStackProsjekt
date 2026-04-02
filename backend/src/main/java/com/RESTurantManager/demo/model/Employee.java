@@ -11,6 +11,8 @@ public class Employee {
     private String role;
     private int resturantId;
     private String password;
+
+    public Employee() { }
     
     public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role, String password, int resturantId) {
         this.name = name;

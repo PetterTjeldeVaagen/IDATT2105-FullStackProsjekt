@@ -1,7 +1,6 @@
 package com.RESTurantManager.demo.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +32,27 @@ public class JdbcTaskRepository implements TaskRepository {
     public Task findById(int id) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM tasks WHERE task_id = ?",
-                new BeanPropertyRowMapper<>(Task.class),
+                (rs, rowNum) -> {
+                    Task task = new Task();
+                    task.setTaskId(rs.getInt("task_id"));
+                    task.setTaskName(rs.getString("name"));
+                    task.setDescription(rs.getString("description"));
+                    task.setFinishBy(rs.getDate("due_date"));
+                    task.setCategory(rs.getString("category"));
+                    task.setStatus(rs.getString("status"));
+                    task.setRecurring(rs.getBoolean("recurring"));
+                    String recurringFrequency = rs.getString("recurring_frequency");
+                    if (recurringFrequency != null) {
+                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency.toLowerCase()));
+                    }
+                    int assignedTo = rs.getInt("assigned_to");
+                    if (!rs.wasNull()) {
+                        com.RESTurantManager.demo.model.Employee employee = new com.RESTurantManager.demo.model.Employee();
+                        employee.setEmployeeId(assignedTo);
+                        task.setAssignedTo(employee);
+                    }
+                    return task;
+                },
                 id
         );
     }

@@ -4,6 +4,7 @@ public class ResturantRequest {
     private String name;
     private int resturantId;
     private int managerId;
+    private int employeeId;
 
     public int getManagerId() {
         return managerId;
@@ -15,10 +16,11 @@ public class ResturantRequest {
 
     public ResturantRequest() { }
 
-    public ResturantRequest(String name, int resturantId, int managerId) {
+    public ResturantRequest(String name, int resturantId, int managerId, int employeeId) {
         this.name = name;
         this.resturantId = resturantId;
         this.managerId = managerId;
+        this.employeeId = employeeId;
     }
 
     public String getName() {
@@ -35,5 +37,13 @@ public class ResturantRequest {
 
     public void setResturantId(int resturantId) {
         this.resturantId = resturantId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 }

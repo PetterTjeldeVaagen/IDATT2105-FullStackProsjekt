@@ -10,6 +10,8 @@ public class Resturant {
     private ArrayList<Task> checklist;
     private ArrayList<String> categories;
     private ArrayList<Deviation> registeredDeviations;
+
+    public Resturant() { }
     
     public Resturant(String name, int resturantId, Employee manager) {
         this.name = name;

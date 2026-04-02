@@ -4,11 +4,15 @@ import java.util.Date;
 
 public class Deviation {
     private String name;
-    private final int deviationId;
+    private int deviationId;
     private String description;
     private Employee registeredBy;
     private Date dateRegistered;
 
+    public Deviation() {
+        this.deviationId = 0; 
+    }
+    
     public Deviation(String name, int deviationId, String description, Employee registeredBy, Date dateRegistered) {
         this.name = name;
         this.deviationId = deviationId;
@@ -27,6 +31,10 @@ public class Deviation {
 
     public int getDeviationId() {
         return deviationId;
+    }
+
+    public void setDeviationId(int deviationId) {
+        this.deviationId = deviationId;
     }
 
     public String getDescription() {

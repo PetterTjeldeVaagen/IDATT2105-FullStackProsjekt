@@ -1,7 +1,6 @@
 package com.RESTurantManager.demo.db;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +28,20 @@ public class JdbcDeviationRepository implements DeviationRepository {
     public Deviation findById(int id) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM deviations WHERE deviation_id = ?",
-                new BeanPropertyRowMapper<>(Deviation.class),
+                (rs, rowNum) -> {
+                    Deviation deviation = new Deviation();
+                    deviation.setDeviationId(rs.getInt("deviation_id"));
+                    deviation.setName(rs.getString("title"));
+                    deviation.setDescription(rs.getString("description"));
+                    deviation.setDateRegistered(rs.getTimestamp("date_registered"));
+                    int registeredBy = rs.getInt("registered_by");
+                    if (!rs.wasNull()) {
+                        com.RESTurantManager.demo.model.Employee employee = new com.RESTurantManager.demo.model.Employee();
+                        employee.setEmployeeId(registeredBy);
+                        deviation.setRegisteredBy(employee);
+                    }
+                    return deviation;
+                },
                 id
         );
     }

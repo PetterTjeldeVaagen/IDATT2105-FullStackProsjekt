@@ -12,6 +12,8 @@ public class Course {
     private String description;
     private int employeeId;
 
+    public Course() { }
+    
     public Course(String name, int courseId, Date dateCompleted, Date dateExpires, File documentation, String description, int employeeId) {
         this.name = name;
         this.courseId = courseId;
