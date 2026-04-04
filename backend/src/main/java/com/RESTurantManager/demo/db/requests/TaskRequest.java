@@ -6,7 +6,7 @@ import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.model.RecurringFrequency;
 
 public class TaskRequest {
-    private String taskName;
+    private String name;
     private int taskId;
     private String description;
     private Date finishBy;
@@ -18,8 +18,8 @@ public class TaskRequest {
 
     public TaskRequest() { }
 
-    public TaskRequest(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, Boolean status, String category) {
-        this.taskName = taskName;
+    public TaskRequest(String name, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, Boolean status, String category) {
+        this.name = name;
         this.taskId = taskId;
         this.description = description;
         this.finishBy = finishBy;
@@ -30,12 +30,12 @@ public class TaskRequest {
         this.category = category;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getTaskId() {

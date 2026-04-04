@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +29,15 @@ public class ResturantController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/getEmployees")
-    public ResponseEntity<ArrayList<Employee>> getEmployeesByResturantId(@RequestBody ResturantRequest resturantRequest) {
-        ArrayList<Employee> employees = resturantService.getEmployeesByResturantId(resturantRequest.getResturantId());
+    @GetMapping("/getEmployees/{resturantId}")
+    public ResponseEntity<ArrayList<Employee>> getEmployeesByResturantId(@PathVariable int resturantId) {
+        ArrayList<Employee> employees = resturantService.getEmployeesByResturantId(resturantId);
         return ResponseEntity.ok(employees);
     }
 
-    @GetMapping("/getManagers")
-    public ResponseEntity<ArrayList<Employee>> getManagersByResturantId(@RequestBody ResturantRequest resturantRequest) {
-        ArrayList<Employee> managers = resturantService.getManagersByResturantId(resturantRequest.getResturantId());
+    @GetMapping("/getManagers/{resturantId}")
+    public ResponseEntity<ArrayList<Employee>> getManagersByResturantId(@PathVariable int resturantId) {
+        ArrayList<Employee> managers = resturantService.getManagersByResturantId(resturantId);
         return ResponseEntity.ok(managers);
     }
     
@@ -70,10 +71,16 @@ public class ResturantController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getResturantIdByEmployeeId")
-    public ResponseEntity<ResturantResponse> getResturantIdByEmployeeId(@RequestBody ResturantRequest resturantRequest) {
-        int resturantId = resturantService.getResturantIdByEmployeeId(resturantRequest.getEmployeeId());
-        ResturantResponse resturantResponse = new ResturantResponse(resturantRequest.getName(), resturantId);
+    @GetMapping("/getResturantIdByEmployeeId/{employeeId}")
+    public ResponseEntity<ResturantResponse> getResturantIdByEmployeeId(@PathVariable int employeeId) {
+        int resturantId = resturantService.getResturantIdByEmployeeId(employeeId);
+        ResturantResponse resturantResponse = new ResturantResponse(null, resturantId);
+        return ResponseEntity.ok(resturantResponse);
+    }
+
+    @GetMapping("/getResturant/{resturantId}")
+    public ResponseEntity<ResturantResponse> getResturantById(@PathVariable int resturantId) {
+        ResturantResponse resturantResponse = resturantService.getResturantById(resturantId);
         return ResponseEntity.ok(resturantResponse);
     }
 }

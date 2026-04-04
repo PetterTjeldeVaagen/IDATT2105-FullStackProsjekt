@@ -3,6 +3,7 @@ package com.RESTurantManager.demo.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,14 +39,14 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponse);
     }
 
-    @PutMapping("/deleteDeviation")
-    public ResponseEntity<DeviationResponse> deleteDeviation(@RequestBody int deviationId) {
+    @PutMapping("/deleteDeviation/{deviationId}")
+    public ResponseEntity<DeviationResponse> deleteDeviation(@PathVariable int deviationId) {
         deviationService.deleteDeviationById(deviationId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getDeviation")
-    public ResponseEntity<DeviationResponse> getDeviation(@RequestBody int deviationId) {
+    @GetMapping("/getDeviation/{deviationId}")
+    public ResponseEntity<DeviationResponse> getDeviation(@PathVariable int deviationId) {
         Deviation deviation = deviationService.getDeviationById(deviationId);
         DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
                                                                     deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());

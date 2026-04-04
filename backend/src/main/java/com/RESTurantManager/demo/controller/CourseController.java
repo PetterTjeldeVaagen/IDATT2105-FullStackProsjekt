@@ -3,6 +3,7 @@ package com.RESTurantManager.demo.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +35,14 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/deleteCourse")
-    public ResponseEntity<CourseResponse> deleteCourse(@RequestBody int courseId) {
+    @PostMapping("/deleteCourse/{courseId}")
+    public ResponseEntity<CourseResponse> deleteCourse(@PathVariable int courseId) {
         courseService.deleteCourseById(courseId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getCourse")
-    public ResponseEntity<CourseResponse> getCourse(@RequestBody int courseId) {
+    @GetMapping("/getCourse/{courseId}")
+    public ResponseEntity<CourseResponse> getCourse(@PathVariable int courseId) {
         Course course = courseService.getCourseById(courseId);
         CourseResponse courseResponse = new CourseResponse(course.getName(), course.getDescription(), 
                                                            course.getEmployeeId(), course.getDateCompleted(), course.getDateExpires());

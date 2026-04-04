@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.RESTurantManager.demo.db.interfaces.ResturantRepository;
+import com.RESTurantManager.demo.db.responses.ResturantResponse;
 import com.RESTurantManager.demo.model.Employee;
+import com.RESTurantManager.demo.model.Resturant;
 
 @Service
 public class ResturantService {
@@ -45,6 +47,12 @@ public class ResturantService {
 
     public void createResturant(String name, int resturantId, int managerId) {
         resturantRepository.createResturant(name, resturantId, managerId);
+    }
+
+    public ResturantResponse getResturantById(int resturantId) {
+        Resturant resturant = resturantRepository.getResturantById(resturantId);
+        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName(), resturant.getResturantId());
+        return resturantResponse;
     }
 
 }

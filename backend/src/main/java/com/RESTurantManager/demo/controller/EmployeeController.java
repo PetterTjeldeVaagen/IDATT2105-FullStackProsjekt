@@ -3,6 +3,7 @@ package com.RESTurantManager.demo.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,15 +35,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeResponse);
     }
 
-    @PutMapping("/deleteEmployee")
-    public ResponseEntity<EmployeeResponse> deleteEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        employeeService.deleteEmployeeById(employeeRequest.getEmployeeId());
+    @PutMapping("/deleteEmployee/{employeeId}")
+    public ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable int employeeId) {
+        employeeService.deleteEmployeeById(employeeId);
          return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getEmployee")
-    public ResponseEntity<EmployeeResponse> getEmployee(@RequestBody EmployeeRequest employeeRequest) {
-        Employee employee = employeeService.getEmployeeById(employeeRequest.getEmployeeId());
+    @GetMapping("/getEmployee/{employeeId}")
+    public ResponseEntity<EmployeeResponse> getEmployee(@PathVariable int employeeId) {
+        Employee employee = employeeService.getEmployeeById(employeeId);
         EmployeeResponse employeeResponse = new EmployeeResponse(employee.getName(), employee.getEmail(), employee.getPhoneNumber(), 
                                                                  employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
         return ResponseEntity.ok(employeeResponse);

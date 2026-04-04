@@ -3,7 +3,7 @@ package com.RESTurantManager.demo.model;
 import java.util.Date;
 
 public class Task {
-    private String taskName;
+    private String name;
     private int taskId;
     private String description;
     private Date finishBy;
@@ -15,8 +15,8 @@ public class Task {
 
     public Task() { }
     
-    public Task(String taskName, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
-        this.taskName = taskName;
+    public Task(String name, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
+        this.name = name;
         this.taskId = taskId;
         this.description = description;
         this.finishBy = finishBy;
@@ -27,12 +27,12 @@ public class Task {
         this.category = category;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getTaskId() {

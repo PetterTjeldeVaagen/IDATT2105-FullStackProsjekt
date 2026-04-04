@@ -16,7 +16,7 @@ public class JdbcTaskRepository implements TaskRepository {
     public void save(Task task) {
         jdbcTemplate.update(
             "INSERT INTO tasks (name, task_id, description, assigned_to, due_date, category, status, recurring, recurring_frequency) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            task.getTaskName(),
+            task.getName(),
             task.getTaskId(),
             task.getDescription(),
             task.getAssignedTo() != null ? task.getAssignedTo().getEmployeeId() : null,
@@ -35,7 +35,7 @@ public class JdbcTaskRepository implements TaskRepository {
                 (rs, rowNum) -> {
                     Task task = new Task();
                     task.setTaskId(rs.getInt("task_id"));
-                    task.setTaskName(rs.getString("name"));
+                    task.setName(rs.getString("name"));
                     task.setDescription(rs.getString("description"));
                     task.setFinishBy(rs.getDate("due_date"));
                     task.setCategory(rs.getString("category"));

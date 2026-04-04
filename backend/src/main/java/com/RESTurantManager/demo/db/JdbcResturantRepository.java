@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.RESTurantManager.demo.db.interfaces.ResturantRepository;
 import com.RESTurantManager.demo.model.Employee;
+import com.RESTurantManager.demo.model.Resturant;
 
 @Repository
 public class JdbcResturantRepository implements ResturantRepository {
@@ -99,6 +100,15 @@ public class JdbcResturantRepository implements ResturantRepository {
                 "SELECT resturant_id FROM employees WHERE employee_id = ?",
                 Integer.class,
                 employeeId
+        );
+    }
+
+    @Override
+    public Resturant getResturantById(int resturantId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM resturants WHERE resturant_id = ?",
+                new BeanPropertyRowMapper<>(Resturant.class),
+                resturantId
         );
     }
 }
