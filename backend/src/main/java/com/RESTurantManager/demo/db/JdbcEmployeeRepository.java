@@ -40,4 +40,13 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     public void deleteById(int id) {
         jdbcTemplate.update("DELETE FROM employees WHERE employee_id = ?", id);
     }
+
+    @Override
+    public Employee findByUsername(String username) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM employees WHERE name = ?",
+                new BeanPropertyRowMapper<>(Employee.class),
+                username
+        );
+    }
 }

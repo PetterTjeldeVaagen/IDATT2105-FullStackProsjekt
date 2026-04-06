@@ -8,4 +8,6 @@ public interface EmployeeRepository {
     Employee findById(int id);
 
     void deleteById(int id);
+
+    Employee findByUsername(String username);
 }
