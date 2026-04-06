@@ -16,9 +16,9 @@ public class AuthenticationService {
     private static final String SECRET_KEY = "mySecretKeyForJWTGenerationMustBeLongEnoughForSecureHS512Signing1234567890";
     private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
-    public String getJWTToken(String username) {
+    public String getJWTToken(String email) {
         String token = Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 1))
                 .signWith(secretKey)
@@ -38,7 +38,7 @@ public class AuthenticationService {
         }
     }
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
             .setSigningKey(secretKey)
             .build()

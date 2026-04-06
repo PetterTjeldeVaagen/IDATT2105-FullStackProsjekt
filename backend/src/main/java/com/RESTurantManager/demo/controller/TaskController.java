@@ -50,4 +50,17 @@ public class TaskController {
                                                      task.getAssignedTo(), task.getStatus(), task.getCategory());
         return ResponseEntity.ok(taskResponse);
     }
+
+    @GetMapping("/getTaskByEmployee/{employeeId}")
+    public ResponseEntity<TaskResponse[]> getTasksByEmployee(@PathVariable int employeeId) {
+        Task[] tasks = taskService.getTasksByEmployeeId(employeeId);
+        TaskResponse[] taskResponses = new TaskResponse[tasks.length];
+        for (int i = 0; i < tasks.length; i++) {
+            Task task = tasks[i];
+            taskResponses[i] = new TaskResponse(task.getName(), task.getTaskId(), task.getDescription(),
+                                               task.getFinishBy(), task.getRecurringFrequency(), task.getRecurring(),
+                                               task.getAssignedTo(), task.getStatus(), task.getCategory());
+        }
+        return ResponseEntity.ok(taskResponses);
+    }
 }

@@ -8,4 +8,6 @@ public interface TaskRepository {
     Task findById(int id);
 
     void deleteById(int id);
+
+    Task[] findByEmployeeId(int employeeId);
 }

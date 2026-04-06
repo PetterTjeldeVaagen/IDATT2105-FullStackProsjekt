@@ -76,13 +76,10 @@ const login = async () => {
       throw new Error(data.message || "Innlogging feilet")
     }
 
-    console.log("Innlogget!", data)
-
     sessionStorage.setItem("token", data.token)
     sessionStorage.setItem("employeeId", data.employeeId)
     sessionStorage.setItem("email", data.email)
-    
-    console.log('Skal navigere til dashboard')
+ 
     router.push('/dashboard')
  
   } catch (err) {

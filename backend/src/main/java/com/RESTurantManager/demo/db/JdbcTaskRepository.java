@@ -61,5 +61,31 @@ public class JdbcTaskRepository implements TaskRepository {
     public void deleteById(int id) {
         jdbcTemplate.update("DELETE FROM tasks WHERE task_id = ?", id);
     }
+
+    @Override
+    public Task[] findByEmployeeId(int employeeId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM tasks WHERE assigned_to = ?",
+                (rs, rowNum) -> {
+                    Task task = new Task();
+                    task.setTaskId(rs.getInt("task_id"));
+                    task.setName(rs.getString("name"));
+                    task.setDescription(rs.getString("description"));
+                    task.setFinishBy(rs.getDate("due_date"));
+                    task.setCategory(rs.getString("category"));
+                    task.setStatus(rs.getString("status"));
+                    task.setRecurring(rs.getBoolean("recurring"));
+                    String recurringFrequency = rs.getString("recurring_frequency");
+                    if (recurringFrequency != null) {
+                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency.toLowerCase()));
+                    }
+                    com.RESTurantManager.demo.model.Employee employee = new com.RESTurantManager.demo.model.Employee();
+                    employee.setEmployeeId(employeeId);
+                    task.setAssignedTo(employee);
+                    return task;
+                },
+                employeeId
+        ).toArray(new Task[0]);
+    }
     
 }
