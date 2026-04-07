@@ -39,6 +39,7 @@ function logOut() {
   color: #e3db02;
   font-size: 2rem;
   font-family: Arial, Helvetica, sans-serif;
+  border-bottom: #e3db02 2px solid;
 
   display: flex;
   justify-content: space-between;

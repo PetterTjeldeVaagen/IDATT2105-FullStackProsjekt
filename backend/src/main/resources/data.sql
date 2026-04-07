@@ -46,6 +46,24 @@ WHERE e.email = 'ola@test.no'
   );
 
 INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency)
+SELECT 'Sjekk brannslukker', 'Kontroller brannslukker', e.employee_id, DATEADD('DAY', 10, CURRENT_DATE), 'Sikkerhet', 'PENDING', FALSE, NULL
+FROM employees e
+WHERE e.email = 'ola@test.no'
+  AND NOT EXISTS (
+      SELECT 1 FROM tasks
+      WHERE name = 'Sjekk brannslukker' AND assigned_to = e.employee_id
+  );
+
+INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency)
+SELECT 'Rydd på tørrlager', 'Rydd på tørrlageret', e.employee_id, DATEADD('DAY', 7, CURRENT_DATE), 'Renhold', 'PENDING', TRUE, 'WEEKLY'
+FROM employees e
+WHERE e.email = 'ola@test.no'
+  AND NOT EXISTS (
+      SELECT 1 FROM tasks
+      WHERE name = 'Rydd på tørrlager' AND assigned_to = e.employee_id
+  );
+
+INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency)
 SELECT 'Sjekk brannslukker', 'Kontroller brannslukker', e.employee_id, DATEADD('DAY', 3, CURRENT_DATE), 'Sikkerhet', 'DONE', FALSE, NULL
 FROM employees e
 WHERE e.email = 'kari@test.no'

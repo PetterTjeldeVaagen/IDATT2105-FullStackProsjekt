@@ -27,6 +27,8 @@ async function getTasks() {
     }
 
     tasks.value = await response.json()
+
+    tasks.value.sort((a, b) => new Date(a.finishBy) - new Date(b.finishBy))
   } catch (err) {
     console.error("Feil ved henting av oppgaver:", err)
     error.value = err.message
@@ -42,8 +44,6 @@ onMounted(() => {
   <div class="dashboard">
     <Navbar />
     <h1>Welcome to the dashboard, {{ username }}!</h1>
-    <ul id="tasks">
-      <li v-for="task in tasks" :key="task.id">{{ task.name }}</li>
-    </ul>
+
   </div>
 </template>

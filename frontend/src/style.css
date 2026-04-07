@@ -1,3 +1,10 @@
 body {
   margin: 0;
+  background-color: #2e2727;
+  color: #e3db02;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    margin-left: 1rem;
 }
