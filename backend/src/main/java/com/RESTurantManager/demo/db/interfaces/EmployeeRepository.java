@@ -10,4 +10,6 @@ public interface EmployeeRepository {
     void deleteById(int id);
 
     Employee findByUsername(String username);
+
+    Employee findByEmail(String email);
 }

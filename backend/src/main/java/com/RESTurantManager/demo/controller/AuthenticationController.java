@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RESTurantManager.demo.db.requests.LoginRequest;
+import com.RESTurantManager.demo.db.requests.RegisterRequest;
 import com.RESTurantManager.demo.db.responses.LoginResponse;
 import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.service.EmployeeService;
@@ -36,18 +37,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest registerRequest) {
         try {
             Employee employee = new Employee();
-            employee.setName(loginRequest.getUsername());
-            employee.setPassword(loginRequest.getPassword());
-            employee.setEmail(loginRequest.getEmail());
+            employee.setName(registerRequest.getUsername());
+            employee.setPassword(registerRequest.getPassword());
+            employee.setEmail(registerRequest.getEmail());
+            employee.setRole("EMPLOYEE");
             
             employeeService.createEmployee(employee);
+            LoginRequest loginRequest = new LoginRequest(registerRequest.getPassword(), registerRequest.getEmail());
             LoginResponse response = employeeService.login(loginRequest);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new LoginResponse(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new LoginResponse("Registrering feilet"));
         }
     }
 }

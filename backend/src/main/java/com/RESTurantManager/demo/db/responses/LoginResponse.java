@@ -2,7 +2,6 @@ package com.RESTurantManager.demo.db.responses;
 
 public class LoginResponse {
     private String response;
-    private String username;
     private String token;
     private int employeeId;
     private String email;
@@ -13,9 +12,8 @@ public class LoginResponse {
         this.response = response;
     }
 
-    public LoginResponse(String response, String username, String token, int employeeId, String email) {
+    public LoginResponse(String response,  String token, int employeeId, String email) {
         this.response = response;
-        this.username = username;
         this.token = token;
         this.employeeId = employeeId;
         this.email = email;
@@ -27,14 +25,6 @@ public class LoginResponse {
 
     public void setResponse(String response) {
         this.response = response;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getToken() {

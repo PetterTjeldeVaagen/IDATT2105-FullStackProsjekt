@@ -16,8 +16,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     @Override
     public void save(Employee employee) {
         jdbcTemplate.update(
-            "INSERT INTO employees (employee_id, name, role, email, password, phone_number, resturant_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            employee.getEmployeeId(),
+            "INSERT INTO employees (name, role, email, password, phone_number, resturant_id) VALUES (?, ?, ?, ?, ?, ?)",
             employee.getName(),
             employee.getRole(),
             employee.getEmail(),
@@ -47,6 +46,15 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 "SELECT * FROM employees WHERE name = ?",
                 new BeanPropertyRowMapper<>(Employee.class),
                 username
+        );
+    }
+
+    @Override
+    public Employee findByEmail(String email) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM employees WHERE email = ?",
+                new BeanPropertyRowMapper<>(Employee.class),
+                email
         );
     }
 }

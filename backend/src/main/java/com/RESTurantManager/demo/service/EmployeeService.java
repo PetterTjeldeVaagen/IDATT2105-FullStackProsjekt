@@ -30,10 +30,10 @@ public class EmployeeService {
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-        String username = loginRequest.getUsername() == null ? "" : loginRequest.getUsername().trim();
         String password = loginRequest.getPassword() == null ? "" : loginRequest.getPassword();
+        String email = loginRequest.getEmail() == null ? "" : loginRequest.getEmail();
 
-        Employee existing = employeeRepository.findByUsername(username);
+        Employee existing = employeeRepository.findByEmail(email);
         if (existing == null) {
             throw new IllegalArgumentException("User not found");
         }
@@ -44,8 +44,7 @@ public class EmployeeService {
 
         return new LoginResponse(
             "Login successful",
-            username,
-            authenticationService.getJWTToken(username),
+            authenticationService.getJWTToken(existing.getEmail()),
             existing.getEmployeeId(),
             existing.getEmail()
         );

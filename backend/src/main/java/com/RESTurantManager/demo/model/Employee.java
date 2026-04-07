@@ -9,12 +9,12 @@ public class Employee {
     private String phoneNumber;
     private ArrayList<Course> training;
     private String role;
-    private int resturantId;
+    private Integer resturantId;
     private String password;
 
     public Employee() { }
     
-    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role, String password, int resturantId) {
+    public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role, String password, Integer resturantId) {
         this.name = name;
         this.employeeId = employeeId;
         this.email = email;
@@ -78,11 +78,11 @@ public class Employee {
         this.role = role;
     }
 
-    public int getResturantId() {
+    public Integer getResturantId() {
         return resturantId;
     }
 
-    public void setResturantId(int resturantId) {
+    public void setResturantId(Integer resturantId) {
         this.resturantId = resturantId;
     }
 

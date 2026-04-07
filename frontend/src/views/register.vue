@@ -1,12 +1,7 @@
 <template>
   <div class="login-container">
-    <form class="login-box" @submit.prevent="login">
+    <form class="login-box" @submit.prevent="register">
       <h1>RESTurant Manager</h1>
-      <div>
-        <p>ola@test.no</p>
-        <p>Ola Nordmann</p>
-        <p>pass123</p>
-      </div>
 
       <label for="email">E-post</label>
       <input
@@ -14,6 +9,15 @@
         v-model="email"
         type="email"
         placeholder="Skriv inn epostadresse"
+        required
+      />
+
+      <label for="username">Brukernavn</label>
+      <input
+        id="username"
+        v-model="username"
+        type="text"
+        placeholder="Skriv inn brukernavn"
         required
       />
 
@@ -26,8 +30,7 @@
         required
       />
 
-      <button type="submit">Logg inn</button>
-      <a class="register-link" href="/register">Registrer deg</a>
+      <button type="submit">Registrer</button>
 
       <p v-if="error" class="error">{{ error }}</p>
     </form>
@@ -41,20 +44,22 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const email = ref("")
+const username = ref("")
 const password = ref("")
 const error = ref("")
 
-const login = async () => {
+const register = async () => {
   error.value = ""
 
   try {
-    const response = await fetch("http://localhost:8080/auth/login", {
+    const response = await fetch("http://localhost:8080/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         email: email.value,
+        username: username.value,
         password: password.value
       })
     })
@@ -62,7 +67,7 @@ const login = async () => {
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.message || "Innlogging feilet")
+      throw new Error(data.message || "Registrering feilet")
     }
 
     sessionStorage.setItem("token", data.token)
@@ -125,13 +130,6 @@ button {
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.register-link {
-  display: block;
-  text-align: center;
-  margin-top: 1rem;
-  color: #e3db02;
 }
 
 

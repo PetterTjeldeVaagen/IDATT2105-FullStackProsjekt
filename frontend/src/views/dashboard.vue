@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
+import Navbar from "@/components/navbar.vue"
 
 const router = useRouter()
 
@@ -41,9 +42,9 @@ onMounted(() => {
 })
 
 </script>
-
 <template>
   <div class="dashboard">
+    <Navbar />
     <h1>Velkommen til dashboardet!</h1>
     <p>Dette er en beskyttet side som krever innlogging.</p>
     <p>Din token: {{ token }}</p>

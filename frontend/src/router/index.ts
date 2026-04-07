@@ -1,5 +1,6 @@
 import Dashboard from '@/views/dashboard.vue'
 import Login from '@/views/logIn.vue'
+import Register from '@/views/register.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
     path: '/dashboard',
