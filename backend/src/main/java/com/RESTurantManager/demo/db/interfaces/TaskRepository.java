@@ -10,4 +10,6 @@ public interface TaskRepository {
     void deleteById(int id);
 
     Task[] findByEmployeeId(int employeeId);
+
+    void update(Task task);
 }

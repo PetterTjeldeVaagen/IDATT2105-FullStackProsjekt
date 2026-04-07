@@ -2,6 +2,7 @@ package com.RESTurantManager.demo.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeResponse);
     }
 
-    @PostMapping("/deleteEmployee/{employeeId}")
+    @DeleteMapping("/deleteEmployee/{employeeId}")
     public ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable int employeeId) {
         employeeService.deleteEmployeeById(employeeId);
          return ResponseEntity.ok().build();

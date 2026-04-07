@@ -23,6 +23,11 @@ async function getTasks() {
 
     tasks.value = await response.json()
     tasks.value.sort((a, b) => new Date(a.finishBy) - new Date(b.finishBy))
+    for (const task of tasks.value) {
+      if(task.status === "PENDING" && new Date(task.finishBy) < new Date()) {
+        task.status = "OVERDUE"
+      }
+    }
   } catch (err) {
     console.error("Feil ved henting av oppgaver:", err)
     error.value = err.message
@@ -47,8 +52,8 @@ onMounted(() => {
      <p v-if="error" class="error">{{ error }}</p>
 
     <ul id="tasks">
-      <li v-for="task in tasks" :key="task.id">
-        <taskComponent :task="task" />
+      <li v-for="task in tasks" :key="task.taskId">
+        <taskComponent :task="task" @taskUpdated="getTasks" />
       </li>
     </ul>
     <createTaskComponent v-if="showCreateTask" @cancel="showCreateTask = false" @taskCreated="getTasks" />

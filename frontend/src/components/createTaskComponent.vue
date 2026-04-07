@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from "vue"
+    import { ref, onMounted } from "vue"
     const frequencyOptions = [
         { value: 'daily', label: 'Daily' },
         { value: 'weekly', label: 'Weekly' },
@@ -12,6 +12,13 @@
         { value: 'biannually', label: 'Biannually' }
     ]
 
+    const props = defineProps({
+        task: {
+            type: Object,
+            default: null
+        }
+    })
+
     const name = ref("")
     const description = ref("")
     const finishBy = ref("")
@@ -20,10 +27,22 @@
     const token = sessionStorage.getItem("token") || ""
     const employeeId = ref(sessionStorage.getItem("employeeId") || "")
     const category = ref("")
-    const emit = defineEmits(["taskCreated", "cancel"])
+    const emit = defineEmits(["taskCreated", "cancel", "taskUpdated"])
 
-    console.log("token fra createTask:", token)
-    console.log("employeeId fra createTask:", employeeId.value)
+    function fillForm(task) {
+        if (!task) return
+
+        name.value = task.name || ""
+        description.value = task.description || ""
+        finishBy.value = task.finishBy ? task.finishBy.split("T")[0] : ""
+        category.value = task.category || ""
+        recurring.value = task.recurring || false
+        recurringFrequency.value = task.recurringFrequency || "daily"
+    }
+
+    onMounted(() => {
+      fillForm(props.task)
+    })
 
     async function createTask() {
         const taskData = {
@@ -59,10 +78,44 @@
             console.error("Error while creating task:", err)
         }
     }
+
+    async function updateTask() {
+        const taskData = {
+            name: name.value,
+            description: description.value,
+            finishBy: finishBy.value,
+            recurring: recurring.value,
+            recurringFrequency: recurringFrequency.value,
+            assignedTo: Number(employeeId.value),
+            status: props.task.status,
+            category: category.value
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/task/updateTask/${props.task.taskId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(taskData)
+            })
+
+            if (!response.ok) {
+                const text = await response.text()
+                throw new Error(text || `HTTP error ${response.status}`)
+            }
+
+            emit('taskUpdated')
+            emit('cancel')
+        } catch (err) {
+            console.error("Error while updating task:", err)
+        }
+    }
 </script>
 
 <template>
-  <form class="task-creation-box" @submit.prevent="createTask">
+  <form class="task-creation-box" @submit.prevent="props.task ? updateTask() : createTask()">
     <label for="name">Task Name</label>
     <input id="name" v-model="name" type="text" placeholder="Enter task name" required />
     <label for="description">Description</label>
@@ -83,7 +136,7 @@
       </option>
     </select>
 
-    <button type="submit">Create Task</button>
+    <button type="submit">{{ props.task ? "Update Task" : "Create Task" }}</button>
     <button type="button" @click="$emit('cancel')">Cancel</button>
   </form>
 </template>
@@ -98,10 +151,11 @@
         border-radius: 8px;
         border: #e3db02 solid 3px;
         position: fixed;
-        margin-top: 12rem;
-        margin-bottom: 12rem;
-        margin-left: 35rem;
-        margin-right: 35rem;
+        
+        margin: auto;
+        min-width: 10%;
+        width: fit-content;
+        height: fit-content;
         inset: 0;
         font-family: Arial, Helvetica, sans-serif;
 

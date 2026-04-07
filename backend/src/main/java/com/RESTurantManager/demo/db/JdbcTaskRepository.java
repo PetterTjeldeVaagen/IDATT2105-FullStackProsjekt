@@ -24,7 +24,7 @@ public class JdbcTaskRepository implements TaskRepository {
             task.getCategory(),
             task.getStatus(),
             task.getRecurring(),
-            task.getRecurringFrequency().name() == null ? null : task.getRecurringFrequency().name().toUpperCase()
+            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name().toUpperCase() : null
         );
     }
 
@@ -86,6 +86,22 @@ public class JdbcTaskRepository implements TaskRepository {
                 },
                 employeeId
         ).toArray(new Task[0]);
+    }
+
+    @Override
+    public void update(Task task) {
+        jdbcTemplate.update(
+            "UPDATE tasks SET name = ?, description = ?, assigned_to = ?, due_date = ?, category = ?, status = ?, recurring = ?, recurring_frequency = ? WHERE task_id = ?",
+            task.getName(),
+            task.getDescription(),
+            task.getAssignedTo() != null ? task.getAssignedTo().getEmployeeId() : null,
+            task.getFinishBy(),
+            task.getCategory(),
+            task.getStatus(),
+            task.getRecurring(),
+            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name().toUpperCase() : null,
+            task.getTaskId()
+        );
     }
     
 }

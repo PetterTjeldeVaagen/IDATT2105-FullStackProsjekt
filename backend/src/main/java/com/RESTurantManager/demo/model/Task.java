@@ -22,7 +22,7 @@ public class Task {
         this.recurringFrequency = recurringFrequency;
         this.recurring = recurring;
         this.assignedTo = assignedTo;
-        this.status = "Not Started";
+        this.status = "PENDING";
         this.category = category;
     }
     
@@ -34,7 +34,7 @@ public class Task {
         this.recurringFrequency = recurringFrequency;
         this.recurring = recurring;
         this.assignedTo = assignedTo;
-        this.status = "Not Started";
+        this.status = "PENDING";
         this.category = category;
     }
 
