@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.RESTurantManager.demo.db.requests.TaskRequest;
 import com.RESTurantManager.demo.db.responses.TaskResponse;
 import com.RESTurantManager.demo.model.Task;
+import com.RESTurantManager.demo.service.EmployeeService;
 import com.RESTurantManager.demo.service.TaskService;
 
 @RestController
@@ -19,24 +20,27 @@ import com.RESTurantManager.demo.service.TaskService;
 @CrossOrigin(origins = "http://localhost:5173")
 public class TaskController {
     private final TaskService taskService;
+    private final EmployeeService employeeService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, EmployeeService employeeService) {
         this.taskService = taskService;
+        this.employeeService = employeeService;
     }
 
-    @PutMapping("/createTask")
+    @PostMapping("/createTask")
     public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
-        Task task = new Task(taskRequest.getName(), taskRequest.getTaskId(), taskRequest.getDescription(),
+        Task task = new Task(taskRequest.getName(), taskRequest.getDescription(),
                              taskRequest.getFinishBy(), taskRequest.getRecurringFrequency(), taskRequest.getRecurring(),
-                             taskRequest.getAssignedTo(), taskRequest.getCategory());
+                             employeeService.getEmployeeById(taskRequest.getAssignedTo()), taskRequest.getCategory());
         taskService.createTask(task);
+
         TaskResponse taskResponse = new TaskResponse(task.getName(), task.getTaskId(), task.getDescription(),
                                                      task.getFinishBy(), task.getRecurringFrequency(), task.getRecurring(),
                                                      task.getAssignedTo(), task.getStatus(), task.getCategory());
         return ResponseEntity.ok(taskResponse);
     }
 
-    @PutMapping("/deleteTask/{taskId}")
+    @PostMapping("/deleteTask/{taskId}")
     public ResponseEntity<TaskResponse> deleteTask(@PathVariable int taskId) {
         taskService.deleteTaskById(taskId);
         return ResponseEntity.ok().build();

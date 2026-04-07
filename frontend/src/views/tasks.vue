@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from '@/components/navbar.vue';
 import taskComponent from '@/components/taskComponent.vue';
+import createTaskComponent from '@/components/createTaskComponent.vue';
 import { onMounted, ref } from 'vue';
 const tasks = ref([])
 const error = ref("")
@@ -28,9 +29,8 @@ async function getTasks() {
   }
 }
 
-function createTask() {
-  console.log("Create task clicked")
-}
+
+const showCreateTask = ref(false)
 
 onMounted(() => {
   getTasks()
@@ -42,7 +42,7 @@ onMounted(() => {
     <Navbar />
     <h1>Task Management</h1>
 
-    <button class="yellowButton" @click="createTask">New task</button>
+    <button class="yellowButton" @click="showCreateTask = true">New task</button>
 
      <p v-if="error" class="error">{{ error }}</p>
 
@@ -51,6 +51,7 @@ onMounted(() => {
         <taskComponent :task="task" />
       </li>
     </ul>
+    <createTaskComponent v-if="showCreateTask" @cancel="showCreateTask = false" @taskCreated="getTasks" />
   </div>
 </template>
 

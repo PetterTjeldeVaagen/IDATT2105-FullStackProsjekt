@@ -2,23 +2,22 @@ package com.RESTurantManager.demo.db.requests;
 
 import java.util.Date;
 
-import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.model.RecurringFrequency;
 
 public class TaskRequest {
     private String name;
-    private int taskId;
+    private Integer taskId;
     private String description;
     private Date finishBy;
     private RecurringFrequency recurringFrequency;
     private Boolean recurring;
-    private Employee assignedTo;
-    private Boolean status;
+    private Integer assignedTo;
+    private String status;
     private String category;
 
     public TaskRequest() { }
 
-    public TaskRequest(String name, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, Boolean status, String category) {
+    public TaskRequest(String name, Integer taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Integer assignedTo, String status, String category) {
         this.name = name;
         this.taskId = taskId;
         this.description = description;
@@ -38,11 +37,11 @@ public class TaskRequest {
         this.name = name;
     }
 
-    public int getTaskId() {
+    public Integer getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(Integer taskId) {
         this.taskId = taskId;
     }
 
@@ -78,19 +77,19 @@ public class TaskRequest {
         this.recurring = recurring;
     }
 
-    public Employee getAssignedTo() {
+    public Integer getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(Employee assignedTo) {
+    public void setAssignedTo(Integer assignedTo) {
         this.assignedTo = assignedTo;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

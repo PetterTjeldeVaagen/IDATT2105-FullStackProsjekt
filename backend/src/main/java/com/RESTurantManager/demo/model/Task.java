@@ -14,6 +14,17 @@ public class Task {
     private String category;
 
     public Task() { }
+
+    public Task(String name, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
+        this.name = name;
+        this.description = description;
+        this.finishBy = finishBy;
+        this.recurringFrequency = recurringFrequency;
+        this.recurring = recurring;
+        this.assignedTo = assignedTo;
+        this.status = "Not Started";
+        this.category = category;
+    }
     
     public Task(String name, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
         this.name = name;

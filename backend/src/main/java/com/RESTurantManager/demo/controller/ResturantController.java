@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,31 +41,31 @@ public class ResturantController {
         return ResponseEntity.ok(managers);
     }
     
-    @PutMapping("/createResturant")
+    @PostMapping("/createResturant")
     public ResponseEntity<Void> createResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.createResturant(resturantRequest.getName(), resturantRequest.getResturantId(), resturantRequest.getManagerId());
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/addEmployee")
+    @PostMapping("/addEmployee")
     public ResponseEntity<Void> addEmployeeToResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.addEmployeeToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/removeEmployee")
+    @PostMapping("/removeEmployee")
     public ResponseEntity<Void> removeEmployeeFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeEmployeeFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/addManager")
+    @PostMapping("/addManager")
     public ResponseEntity<Void> addManagerToResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.addManagerToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getManagerId()));
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/removeManager")
+    @PostMapping("/removeManager")
     public ResponseEntity<Void> removeManagerFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeManagerFromResturant(resturantRequest.getResturantId(), resturantRequest.getManagerId());
         return ResponseEntity.ok().build();

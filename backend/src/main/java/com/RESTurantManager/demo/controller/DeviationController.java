@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +28,7 @@ public class DeviationController {
         this.employeeService = employeeService;
     }
 
-    @PutMapping("/createDeviation") 
+    @PostMapping("/createDeviation") 
     public ResponseEntity<DeviationResponse> createDeviation(@RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
         Deviation deviation = new Deviation(deviationRequest.getTitle(),deviationRequest.getDeviationId(), deviationRequest.getDescription(), 
@@ -39,7 +39,7 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponse);
     }
 
-    @PutMapping("/deleteDeviation/{deviationId}")
+    @PostMapping("/deleteDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> deleteDeviation(@PathVariable int deviationId) {
         deviationService.deleteDeviationById(deviationId);
         return ResponseEntity.ok().build();

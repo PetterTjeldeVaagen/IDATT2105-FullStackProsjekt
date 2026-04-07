@@ -24,7 +24,7 @@ public class JdbcTaskRepository implements TaskRepository {
             task.getCategory(),
             task.getStatus(),
             task.getRecurring(),
-            task.getRecurringFrequency()
+            task.getRecurringFrequency().name() == null ? null : task.getRecurringFrequency().name().toUpperCase()
         );
     }
 
