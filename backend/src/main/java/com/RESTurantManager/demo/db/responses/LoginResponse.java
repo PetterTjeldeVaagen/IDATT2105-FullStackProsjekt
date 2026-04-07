@@ -5,6 +5,7 @@ public class LoginResponse {
     private String token;
     private int employeeId;
     private String email;
+    private String username;
 
     public LoginResponse() {}
 
@@ -12,11 +13,12 @@ public class LoginResponse {
         this.response = response;
     }
 
-    public LoginResponse(String response,  String token, int employeeId, String email) {
+    public LoginResponse(String response,  String token, int employeeId, String email, String username) {
         this.response = response;
         this.token = token;
         this.employeeId = employeeId;
         this.email = email;
+        this.username = username;
     }
 
     public String getResponse() {
@@ -49,5 +51,13 @@ public class LoginResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

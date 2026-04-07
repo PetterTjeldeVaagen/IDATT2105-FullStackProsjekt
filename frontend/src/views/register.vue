@@ -3,34 +3,34 @@
     <form class="login-box" @submit.prevent="register">
       <h1>RESTurant Manager</h1>
 
-      <label for="email">E-post</label>
+      <label for="email">Email</label>
       <input
         id="email"
         v-model="email"
         type="email"
-        placeholder="Skriv inn epostadresse"
+        placeholder="Enter your email"
         required
       />
 
-      <label for="username">Brukernavn</label>
+      <label for="username">Username</label>
       <input
         id="username"
         v-model="username"
         type="text"
-        placeholder="Skriv inn brukernavn"
+        placeholder="Enter your username"
         required
       />
 
-      <label for="password">Passord</label>
+      <label for="password">Password</label>
       <input
         id="password"
         v-model="password"
         type="password"
-        placeholder="Skriv inn passord"
+        placeholder="Enter your password"
         required
       />
 
-      <button type="submit">Registrer</button>
+      <button type="submit">Register</button>
 
       <p v-if="error" class="error">{{ error }}</p>
     </form>
@@ -67,12 +67,13 @@ const register = async () => {
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.message || "Registrering feilet")
+      throw new Error(data.message || "Registration failed")
     }
 
     sessionStorage.setItem("token", data.token)
     sessionStorage.setItem("employeeId", data.employeeId)
     sessionStorage.setItem("email", data.email)
+    sessionStorage.setItem("username", data.username)
  
     router.push('/dashboard')
  

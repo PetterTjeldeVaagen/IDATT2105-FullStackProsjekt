@@ -46,7 +46,8 @@ public class EmployeeService {
             "Login successful",
             authenticationService.getJWTToken(existing.getEmail()),
             existing.getEmployeeId(),
-            existing.getEmail()
+            existing.getEmail(),
+            existing.getName()
         );
     }
 }

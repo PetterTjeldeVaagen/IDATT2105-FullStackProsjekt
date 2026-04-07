@@ -8,14 +8,10 @@ const router = useRouter()
 const token = ref(sessionStorage.getItem("token") || "")
 const employeeId = ref(sessionStorage.getItem("employeeId") || "")
 const email = ref(sessionStorage.getItem("email") || "")
+const username = ref(sessionStorage.getItem("username") || "")
+
 const tasks = ref([])
 const error = ref("")
-
-function logOut() {
-  token.value = ""
-  sessionStorage.clear()
-  router.push("/")
-}
 
 async function getTasks() {
   try {
@@ -45,16 +41,9 @@ onMounted(() => {
 <template>
   <div class="dashboard">
     <Navbar />
-    <h1>Velkommen til dashboardet!</h1>
-    <p>Dette er en beskyttet side som krever innlogging.</p>
-    <p>Din token: {{ token }}</p>
-  </div>
-
-  <div>
+    <h1>Welcome to the dashboard, {{ username }}!</h1>
     <ul id="tasks">
       <li v-for="task in tasks" :key="task.id">{{ task.name }}</li>
     </ul>
   </div>
-
-  <button @click="logOut">Logg ut</button>
 </template>
