@@ -12,4 +12,6 @@ public interface EmployeeRepository {
     Employee findByUsername(String username);
 
     Employee findByEmail(String email);
+
+    Employee[] findByResturantId(int resturantId);
 }

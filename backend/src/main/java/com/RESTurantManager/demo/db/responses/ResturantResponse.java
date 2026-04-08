@@ -7,9 +7,8 @@ public class ResturantResponse {
 
     public ResturantResponse() { }
 
-    public ResturantResponse(String name, int resturantId) {
+    public ResturantResponse(String name) {
         this.name = name;
-        this.resturantId = resturantId;
     }
 
     public String getName() {

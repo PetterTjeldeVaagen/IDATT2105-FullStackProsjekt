@@ -15,9 +15,8 @@ public class JdbcDeviationRepository implements DeviationRepository {
     @Override
     public void save(Deviation deviation) {
         jdbcTemplate.update(
-            "INSERT INTO deviations (title, deviation_id, description, registered_by, date_registered) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO deviations (title, description, registered_by, date_registered) VALUES (?, ?, ?, ?)",
             deviation.getName(),
-            deviation.getDeviationId(),
             deviation.getDescription(),
             deviation.getRegisteredBy() != null ? deviation.getRegisteredBy().getEmployeeId() : null,
             deviation.getDateRegistered()
@@ -84,27 +83,4 @@ public class JdbcDeviationRepository implements DeviationRepository {
                 employeeId
         ).toArray(new Deviation[0]);
     }
-
-    @Override
-    public Deviation[] findByResturantId(int resturantId) {
-        return jdbcTemplate.query(
-                "SELECT * FROM deviations WHERE resturant_id = ?",
-                (rs, rowNum) -> {
-                    Deviation deviation = new Deviation();
-                    deviation.setDeviationId(rs.getInt("deviation_id"));
-                    deviation.setName(rs.getString("title"));
-                    deviation.setDescription(rs.getString("description"));
-                    deviation.setDateRegistered(rs.getTimestamp("date_registered"));
-                    int registeredBy = rs.getInt("registered_by");
-                    if (!rs.wasNull()) {
-                        com.RESTurantManager.demo.model.Employee employee = new com.RESTurantManager.demo.model.Employee();
-                        employee.setEmployeeId(registeredBy);
-                        deviation.setRegisteredBy(employee);
-                    }
-                    return deviation;
-                },
-                resturantId
-        ).toArray(new Deviation[0]);
-    }
-    
 }

@@ -1,5 +1,8 @@
 package com.RESTurantManager.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,10 +72,15 @@ public class DeviationController {
 
     @GetMapping("/getDeviationByResturant/{resturantId}")
     public ResponseEntity<DeviationResponse[]> getDeviationsByResturantId(@PathVariable int resturantId) {
-        Deviation[] deviations = deviationService.getDeviationsByResturantId(resturantId);
-        DeviationResponse[] deviationResponses = new DeviationResponse[deviations.length];
-        for (int i = 0; i < deviations.length; i++) {
-            Deviation deviation = deviations[i];
+        Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
+        ArrayList<Deviation> deviations = new ArrayList<>();
+        for (Employee employee : employees) {
+            Deviation[] employeeDeviations = deviationService.getDeviationsByEmployeeId(employee.getEmployeeId());
+            deviations.addAll(Arrays.asList(employeeDeviations));
+        }
+        DeviationResponse[] deviationResponses = new DeviationResponse[deviations.size()];
+        for (int i = 0; i < deviations.size(); i++) {
+            Deviation deviation = deviations.get(i);
             DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
                                                                         deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
             deviationResponses[i] = deviationResponse;

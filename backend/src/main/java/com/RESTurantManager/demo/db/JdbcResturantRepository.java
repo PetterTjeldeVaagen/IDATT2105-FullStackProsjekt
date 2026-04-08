@@ -40,19 +40,11 @@ public class JdbcResturantRepository implements ResturantRepository {
     }
 
     @Override
-    public void createResturant(String name, int resturantId, int managerId) {
+    public void createResturant(String name, int managerId) {
         jdbcTemplate.update(
-            "INSERT INTO resturants (name, resturant_id, location) VALUES (?, ?, ?)",
+            "INSERT INTO resturants (name, location) VALUES (?, ?)",
             name,
-            resturantId,
             "Unknown"
-        );
-
-        jdbcTemplate.update(
-            "UPDATE employees SET resturant_id = ?, role = ? WHERE employee_id = ?",
-            resturantId,
-            "MANAGER",
-            managerId
         );
     }
 

@@ -22,5 +22,5 @@ public interface ResturantRepository {
 
     Resturant getResturantById(int resturantId);
 
-    void createResturant(String name, int resturantId, int managerId);
+    void createResturant(String name, int managerId);
 }

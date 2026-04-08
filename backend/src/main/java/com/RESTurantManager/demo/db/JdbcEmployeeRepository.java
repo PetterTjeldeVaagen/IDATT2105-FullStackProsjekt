@@ -57,4 +57,13 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 email
         );
     }
+
+    @Override
+    public Employee[] findByResturantId(int resturantId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM employees WHERE resturant_id = ?",
+                new BeanPropertyRowMapper<>(Employee.class),
+                resturantId
+        ).toArray(new Employee[0]);
+    }
 }

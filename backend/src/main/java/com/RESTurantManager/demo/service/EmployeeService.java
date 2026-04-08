@@ -50,4 +50,8 @@ public class EmployeeService {
             existing.getName()
         );
     }
+
+    public Employee[] getEmployeesByResturantId(int resturantId) {
+        return employeeRepository.findByResturantId(resturantId);
+    }
 }

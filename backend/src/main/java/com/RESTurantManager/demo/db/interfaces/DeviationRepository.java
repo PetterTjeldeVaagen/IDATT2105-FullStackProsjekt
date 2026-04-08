@@ -12,6 +12,4 @@ public interface DeviationRepository {
     void update(Deviation deviation);
 
     Deviation[] findByEmployeeId(int employeeId);
-
-    Deviation[] findByResturantId(int resturantId);
 }

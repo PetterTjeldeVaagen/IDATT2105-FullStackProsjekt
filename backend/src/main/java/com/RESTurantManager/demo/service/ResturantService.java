@@ -12,9 +12,11 @@ import com.RESTurantManager.demo.model.Resturant;
 @Service
 public class ResturantService {
     private final ResturantRepository resturantRepository;
+    private final EmployeeService employeeService;
     
-    public ResturantService(ResturantRepository resturantRepository) {
+    public ResturantService(ResturantRepository resturantRepository, EmployeeService employeeService) {
         this.resturantRepository = resturantRepository;
+        this.employeeService = employeeService;
     }
 
     public ArrayList<Employee> getEmployeesByResturantId(int resturantId) {
@@ -43,17 +45,20 @@ public class ResturantService {
 
     public ResturantResponse getResturantByEmployeeId(int employeeId) {
         Resturant resturant = resturantRepository.getResturantByEmployeeId(employeeId);
-        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName(), resturant.getResturantId());
+        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName());
+        resturantResponse.setResturantId(resturant.getResturantId());
         return resturantResponse;
     }
 
     public void createResturant(String name, int resturantId, int managerId) {
-        resturantRepository.createResturant(name, resturantId, managerId);
+        resturantRepository.createResturant(name, managerId);
+        addManagerToResturant(resturantId, employeeService.getEmployeeById(managerId));
     }
 
     public ResturantResponse getResturantById(int resturantId) {
         Resturant resturant = resturantRepository.getResturantById(resturantId);
-        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName(), resturant.getResturantId());
+        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName());
+        resturantResponse.setResturantId(resturant.getResturantId());
         return resturantResponse;
     }
 

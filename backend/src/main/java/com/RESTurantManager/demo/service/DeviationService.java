@@ -1,7 +1,5 @@
 package com.RESTurantManager.demo.service;
 
-import java.lang.reflect.Array;
-
 import org.springframework.stereotype.Service;
 
 import com.RESTurantManager.demo.db.interfaces.DeviationRepository;
@@ -33,9 +31,5 @@ public class DeviationService {
 
     public Deviation[] getDeviationsByEmployeeId(int employeeId) {
         return deviationRepository.findByEmployeeId(employeeId);
-    }
-
-    public Deviation[] getDeviationsByResturantId(int resturantId) {
-        return deviationRepository.findByResturantId(resturantId);
     }
 }
