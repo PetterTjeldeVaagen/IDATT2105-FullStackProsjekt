@@ -60,6 +60,17 @@ public class CourseController {
         return ResponseEntity.ok(courseResponses);
     }
 
+    @GetMapping("/getCoursesByResturant/{resturantId}")
+    public ResponseEntity<CourseResponse[]> getCoursesByResturantId(@PathVariable int resturantId) {
+        Course[] courses = courseService.getCoursesByResturantId(resturantId);
+        CourseResponse[] courseResponses = new CourseResponse[courses.length];
+        for (int i = 0; i < courses.length; i++) {
+            courseResponses[i] = new CourseResponse(courses[i].getName(), courses[i].getDescription(), 
+                                                   courses[i].getEmployeeId(), courses[i].getDateCompleted(), courses[i].getDateExpires(), courses[i].getCourseId());
+        }
+        return ResponseEntity.ok(courseResponses);
+    }
+
     @PostMapping("/updateCourse/{courseId}")
     public ResponseEntity<CourseResponse> updateCourse(@PathVariable int courseId, @RequestBody CourseRequest courseRequest) {
         Course course = new Course(courseRequest.getName(),

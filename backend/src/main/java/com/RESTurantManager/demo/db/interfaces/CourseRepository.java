@@ -12,4 +12,6 @@ public interface CourseRepository {
     void update(Course course);
 
     Course[] findByEmployeeId(int employeeId);
+
+    Course[] getCoursesByResturantId(int resturantId);
 }

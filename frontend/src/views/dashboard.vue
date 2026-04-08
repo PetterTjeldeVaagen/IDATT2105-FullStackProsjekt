@@ -15,6 +15,9 @@ const username = ref(sessionStorage.getItem("username") || "")
 
 const tasks = ref([])
 const courses = ref([])
+const allCourses = ref([])
+const employees = ref([])
+const todaysTasks = ref([])
 const deviations = ref([])
 const error = ref("")
 
@@ -128,10 +131,80 @@ async function getDeviations() {
   }
 }
 
+async function getEmployees() {
+  try {
+    const response = await fetch(`http://localhost:8080/employee/getEmployeesByResturant/${resturantId.value}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      }
+    })
+
+    if (!response.ok) {
+      const text = await response.text()
+      throw new Error(text || `HTTP error ${response.status}`)
+    }
+
+    employees.value = await response.json()
+  } catch (err) {
+    console.error("Error while fetching employees:", err)
+    error.value = err.message
+  }
+}
+
+async function getAllCourses() {
+  try {
+    const response = await fetch(`http://localhost:8080/course/getCoursesByResturant/${resturantId.value}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      }
+    })
+
+    if (!response.ok) {
+      const text = await response.text()
+      throw new Error(text || `HTTP error ${response.status}`)
+    }
+
+    allCourses.value = await response.json()
+  } catch (err) {
+    console.error("Error while fetching all courses:", err)
+    error.value = err.message
+  }
+}
+
+async function getTodaysTask() {
+  try {
+    const response = await fetch(`http://localhost:8080/task/getTasksByResturant/${resturantId.value}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`
+      }
+    })
+
+    if (!response.ok) {
+      const text = await response.text()
+      throw new Error(text || `HTTP error ${response.status}`)
+    }
+
+    todaysTasks.value = await response.json()
+    const now = new Date()
+    todaysTasks.value = todaysTasks.value.filter(task => {
+      const finishBy = new Date(task.finishBy)
+      return finishBy.toDateString() === now.toDateString()
+    })
+  } catch (err) {
+    console.error("Error while fetching today's tasks:", err)
+  }
+}
+
 onMounted(async () => {
   await getResturantInfo()
-  await getTasks()
-  await getCourses()
+  if(isManager.value) {
+    await getEmployees()
+    await getAllCourses()
+    await getTodaysTask()
+  } else {
+    await getTasks()
+    await getCourses()
+  }
   await getDeviations()
 })
 
@@ -142,9 +215,53 @@ onMounted(async () => {
     <h1>Welcome to the dashboard, {{ username }}!</h1>
     <h2>{{ resturantName }}</h2>
 
-    <div v-if="isManager">
-      <p>The resturants join code is: {{ joinCode }}</p>
-    </div>
+    <div id="managerSection" v-if="isManager">
+      <div id="joinCodeCard" class="dashboardCard">
+        <h2>Restaurant join code: {{ joinCode }}</h2>
+      </div>
+
+      <div id="managerGrid">
+          <div id="taskForToday" class="dashboardCard">
+            <h2>Tasks that need to be finished today</h2>
+            <p v-if="error" class="error">{{ error }}</p>
+            <ul v-else class="tasks">
+              <li v-for="task in todaysTasks" :key="task.taskId">
+                <taskComponent :task="task" @taskUpdated="getTodaysTask" />
+              </li>
+            </ul>
+          </div>
+
+          <div id="managerDeviations" class="dashboardCard">
+            <h2>Recently registered deviations</h2>
+            <p v-if="error" class="error">{{ error }}</p>
+            <ul v-else class="deviations">
+              <li v-for="deviation in deviations" :key="deviation.deviationId">
+                <deviationComponent :deviation="deviation" @deviationUpdated="getDeviations" />
+              </li>
+            </ul>
+          </div>
+
+          <div id="coursesClosestToExpiring" class="dashboardCard">
+            <h2>Employees' courses close to expiring</h2>
+            <p v-if="error" class="error">{{ error }}</p>
+            <ul v-else class="courses">
+              <li v-for="course in allCourses" :key="course.courseId">
+                <courseComponent :course="course" @courseUpdated="getAllCourses" />
+              </li>
+            </ul>
+          </div>
+
+          <div id="employeeList" class="dashboardCard">
+            <h2>Employees in your restaurant</h2>
+            <p v-if="error" class="error">{{ error }}</p>
+            <ul v-else class="employees">
+              <li v-for="employee in employees" :key="employee.employeeId">
+                {{ employee.name }} - {{ employee.email }} - {{ employee.role }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     <div id="notManager" v-if="!isManager">
         <div id="employeeTasks">
@@ -167,7 +284,7 @@ onMounted(async () => {
           </ul>
         </div>
 
-      <div id="recentDeviations">
+      <div class="recentDeviations">
         <h2>Recently registered deviations</h2>
         <p v-if="error" class="error">{{ error }}</p>
         <ul v-else class="deviations">
@@ -188,20 +305,30 @@ onMounted(async () => {
 }
 
 h2 {
-  padding-left: 1rem;
+  margin: 0 0 1rem 0;
+  padding-left: 0;
 }
 
+#managerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#joinCodeCard {
+  max-width: 30rem;
+}
+
+#managerGrid,
 #notManager {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-auto-rows: minmax(260px, 1fr);
   gap: 1rem;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 220px);
 }
 
-#employeeTasks,
-#employeeCourses,
-#recentDeviations {
+.dashboardCard {
   border: yellow 2px solid;
   border-radius: 8px;
   padding: 1rem;
@@ -212,29 +339,20 @@ h2 {
   flex-direction: column;
 }
 
-#employeeTasks {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-#recentDeviations {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-#employeeCourses {
-  grid-column: 1;
-  grid-row: 2;
-}
-
 .tasks,
 .courses,
-.deviations {
+.deviations,
+.employees {
   list-style-type: none;
   padding: 0;
   margin: 0;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+}
+
+.employees li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>

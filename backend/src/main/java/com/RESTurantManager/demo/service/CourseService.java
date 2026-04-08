@@ -32,4 +32,8 @@ public class CourseService {
         return courseRepository.findByEmployeeId(employeeId);
     }
 
+    public Course[] getCoursesByResturantId(int resturantId) {
+        return courseRepository.getCoursesByResturantId(resturantId);
+    }
+
 }

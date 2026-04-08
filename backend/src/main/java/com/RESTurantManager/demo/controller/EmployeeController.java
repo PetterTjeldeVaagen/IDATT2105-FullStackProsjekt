@@ -49,4 +49,16 @@ public class EmployeeController {
                                                                  employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
         return ResponseEntity.ok(employeeResponse);
     }
+
+    @GetMapping("/getEmployeesByResturant/{resturantId}")
+    public ResponseEntity<EmployeeResponse[]> getEmployeesByResturantId(@PathVariable int resturantId) {
+        Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
+        EmployeeResponse[] employeeResponses = new EmployeeResponse[employees.length];
+        for (int i = 0; i < employees.length; i++) {
+            Employee employee = employees[i];
+            employeeResponses[i] = new EmployeeResponse(employee.getName(), employee.getEmail(), employee.getPhoneNumber(), 
+                                                        employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
+        }
+        return ResponseEntity.ok(employeeResponses);
+    }
 }

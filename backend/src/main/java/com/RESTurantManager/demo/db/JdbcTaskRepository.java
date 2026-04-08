@@ -86,7 +86,6 @@ public class JdbcTaskRepository implements TaskRepository {
                 employeeId
         ).toArray(new Task[0]);
     }
-
     @Override
     public void update(Task task) {
         jdbcTemplate.update(

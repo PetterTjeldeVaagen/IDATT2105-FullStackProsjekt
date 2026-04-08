@@ -1,5 +1,8 @@
 package com.RESTurantManager.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.RESTurantManager.demo.db.requests.TaskRequest;
 import com.RESTurantManager.demo.db.responses.TaskResponse;
+import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.model.Task;
 import com.RESTurantManager.demo.service.EmployeeService;
 import com.RESTurantManager.demo.service.TaskService;
@@ -63,6 +67,24 @@ public class TaskController {
         TaskResponse[] taskResponses = new TaskResponse[tasks.length];
         for (int i = 0; i < tasks.length; i++) {
             Task task = tasks[i];
+            taskResponses[i] = new TaskResponse(task.getName(), task.getTaskId(), task.getDescription(),
+                                               task.getFinishBy(), task.getRecurringFrequency(), task.getRecurring(),
+                                               task.getAssignedTo(), task.getStatus(), task.getCategory());
+        }
+        return ResponseEntity.ok(taskResponses);
+    }
+
+    @GetMapping("/getTasksByResturant/{resturantId}")
+    public ResponseEntity<TaskResponse[]> getTasksByResturant(@PathVariable int resturantId) {
+        Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Employee employee : employees) {
+            Task[] employeeTasks = taskService.getTasksByEmployeeId(employee.getEmployeeId());
+            tasks.addAll(Arrays.asList(employeeTasks));
+        }
+        TaskResponse[] taskResponses = new TaskResponse[tasks.size()];
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
             taskResponses[i] = new TaskResponse(task.getName(), task.getTaskId(), task.getDescription(),
                                                task.getFinishBy(), task.getRecurringFrequency(), task.getRecurring(),
                                                task.getAssignedTo(), task.getStatus(), task.getCategory());

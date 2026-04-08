@@ -88,4 +88,26 @@ public class JdbcCourseRepository implements CourseRepository {
                 employeeId
         ).toArray(new Course[0]);
     }
+
+    @Override
+    public Course[] getCoursesByResturantId(int resturantId) {
+        return jdbcTemplate.query(
+                "SELECT c.* FROM courses c JOIN employees e ON c.employee_id = e.employee_id WHERE e.resturant_id = ?",
+                (rs, rowNum) -> {
+                    Course course = new Course();
+                    course.setCourseId(rs.getInt("course_id"));
+                    course.setName(rs.getString("name"));
+                    course.setDescription(rs.getString("description"));
+                    course.setEmployeeId(rs.getInt("employee_id"));
+                    course.setDateCompleted(rs.getDate("date_completed"));
+                    course.setDateExpires(rs.getDate("date_expires"));
+                    String documentation = rs.getString("documentation");
+                    if (documentation != null) {
+                        course.setDocumentation(new java.io.File(documentation));
+                    }
+                    return course;
+                },
+                resturantId
+        ).toArray(new Course[0]);
+    }
 }
