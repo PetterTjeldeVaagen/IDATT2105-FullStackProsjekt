@@ -75,11 +75,10 @@ onMounted(() => {
     </div>
 
     <div id="employeeTasks">
-      <h2>Your Tasks</h2>
+      <h2>Your pending and overdue Tasks</h2>
       <p v-if="error" class="error">{{ error }}</p>
-      <div v-else-if="tasks.length === 0">No tasks assigned.</div>
       <ul v-else class="tasks">
-        <li v-for="task in tasks" :key="task.taskId">
+        <li v-for="task in tasks.filter(task => task.status === 'PENDING' || task.status === 'OVERDUE')" :key="task.taskId">
           <taskComponent :task="task" @taskUpdated="getTasks" />
         </li>
       </ul>
@@ -91,17 +90,19 @@ onMounted(() => {
 <style scoped>
   #employeeTasks {
     margin-left: 1rem;
-    border: yellow 1px solid;
+    border: yellow 2px solid;
+    border-radius: 8px;
     padding: 1rem;
-    min-width: 10%;
+    min-width: 20%;
     max-width: 30%;
-    display: flex;
-    flex-direction: column;
   }
 
   .tasks {
     list-style-type: none;
     padding: 0;
-    
+    margin: 0;
+    max-height: 20rem;
+    max-width: 100%;
+    overflow-y: auto;
   }
 </style>

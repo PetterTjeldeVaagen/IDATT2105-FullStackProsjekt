@@ -119,7 +119,7 @@ async function CompleteTask() {
     <div class="actions" v-if="$route.name === 'tasks'">
       <button @click="EditTask">Edit</button>
       <button @click="DeleteTask">Delete</button>
-      <button @click="CompleteTask">Complete</button>
+      <button @click="CompleteTask" v-if="props.task.status !== 'COMPLETED'">Complete</button>
     </div>
     <div class="info">
       <h2>{{ props.task.name }}</h2>
@@ -139,9 +139,7 @@ async function CompleteTask() {
         margin-bottom: 1rem;
         display: flex;
         font-family: Arial, Helvetica, sans-serif;
-        min-width: 10%;
-        max-width: 30%;
-        width: fit-content;
+        width: 90%;
     }
 
     .info {
