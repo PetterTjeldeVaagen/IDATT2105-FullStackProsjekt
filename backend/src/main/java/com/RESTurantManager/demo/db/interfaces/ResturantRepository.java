@@ -18,7 +18,7 @@ public interface ResturantRepository {
 
     void removeManagerFromResturant(int resturantId, int managerId);
 
-    int getResturantIdByEmployeeId(int employeeId);
+    Resturant getResturantByEmployeeId(int employeeId);
 
     Resturant getResturantById(int resturantId);
 

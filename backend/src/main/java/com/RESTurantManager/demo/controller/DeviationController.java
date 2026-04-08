@@ -67,6 +67,19 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponses);
     }
 
+    @GetMapping("/getDeviationByResturant/{resturantId}")
+    public ResponseEntity<DeviationResponse[]> getDeviationsByResturantId(@PathVariable int resturantId) {
+        Deviation[] deviations = deviationService.getDeviationsByResturantId(resturantId);
+        DeviationResponse[] deviationResponses = new DeviationResponse[deviations.length];
+        for (int i = 0; i < deviations.length; i++) {
+            Deviation deviation = deviations[i];
+            DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
+                                                                        deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
+            deviationResponses[i] = deviationResponse;
+        }
+        return ResponseEntity.ok(deviationResponses);
+    }
+
     @PostMapping("/updateDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> updateDeviation(@PathVariable int deviationId, @RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());

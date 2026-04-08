@@ -75,7 +75,7 @@ const register = async () => {
     sessionStorage.setItem("email", data.email)
     sessionStorage.setItem("username", data.username)
  
-    router.push('/dashboard')
+    router.push('/joinResturant')
  
   } catch (err) {
     error.value = err.message

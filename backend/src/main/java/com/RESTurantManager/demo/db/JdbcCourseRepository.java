@@ -15,9 +15,8 @@ public class JdbcCourseRepository implements CourseRepository {
     @Override
     public void save(Course course) {
         jdbcTemplate.update(
-                "INSERT INTO courses (name, course_id, description, employee_id, date_completed, date_expires, documentation, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO courses (name, description, employee_id, date_completed, date_expires, documentation, category) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 course.getName(),
-                course.getCourseId(),
                 course.getDescription(),
                 course.getEmployeeId(),
                 course.getDateCompleted(),

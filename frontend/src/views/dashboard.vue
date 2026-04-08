@@ -15,6 +15,7 @@ const tasks = ref([])
 const error = ref("")
 
 async function getTasks() {
+  console.log("Fetching tasks for employeeId:", employeeId.value)
   try {
     const response = await fetch(`http://localhost:8080/task/getTaskByEmployee/${employeeId.value}`, {
       headers: {
@@ -40,7 +41,7 @@ const isManager = ref(false)
 const resturantName = ref("")
 async function getResturantInfo() {
   try {
-    const response = await fetch(`http://localhost:8080/restaurant/getResturantIdByEmployeeId/${employeeId.value}`, {
+    const response = await fetch(`http://localhost:8080/resturant/getResturantByEmployeeId/${employeeId.value}`, {
       headers: {
         Authorization: `Bearer ${token.value}`
       }
@@ -52,15 +53,35 @@ async function getResturantInfo() {
     }
 
     const restaurantInfo = await response.json()
+
     resturantName.value = restaurantInfo.name
+    try {
+      const managerResponse = await fetch(`http://localhost:8080/resturant/getManagers/${restaurantInfo.resturantId}`, {
+        headers: {
+          Authorization: `Bearer ${token.value}`
+        }
+      })
+
+      if (!managerResponse.ok) {
+        const text = await managerResponse.text()
+        throw new Error(text || `HTTP error ${managerResponse.status}`)
+      }
+
+      const managers = await managerResponse.json()
+      isManager.value = managers.some(manager => manager.employeeId === Number(employeeId.value))
+      console.log("Is manager:", isManager.value)
+    } catch (err) {
+      console.error("Error while fetching managers:", err)
+    }
   } catch (err) {
     console.error("Error while fetching restaurant info:", err)
   }
+
 }
 
 onMounted(() => {
-  getTasks()
   getResturantInfo()
+  getTasks()
 })
 
 </script>
@@ -88,6 +109,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+  h2 {
+    margin-left: 1rem;
+  }
+
   #employeeTasks {
     margin-left: 1rem;
     border: yellow 2px solid;

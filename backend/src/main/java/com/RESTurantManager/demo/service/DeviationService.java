@@ -34,4 +34,8 @@ public class DeviationService {
     public Deviation[] getDeviationsByEmployeeId(int employeeId) {
         return deviationRepository.findByEmployeeId(employeeId);
     }
+
+    public Deviation[] getDeviationsByResturantId(int resturantId) {
+        return deviationRepository.findByResturantId(resturantId);
+    }
 }

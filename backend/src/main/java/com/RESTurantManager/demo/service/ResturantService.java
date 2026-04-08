@@ -41,8 +41,10 @@ public class ResturantService {
         resturantRepository.removeManagerFromResturant(resturantId, managerId);
     }
 
-    public int getResturantIdByEmployeeId(int employeeId) {
-        return resturantRepository.getResturantIdByEmployeeId(employeeId);
+    public ResturantResponse getResturantByEmployeeId(int employeeId) {
+        Resturant resturant = resturantRepository.getResturantByEmployeeId(employeeId);
+        ResturantResponse resturantResponse = new ResturantResponse(resturant.getName(), resturant.getResturantId());
+        return resturantResponse;
     }
 
     public void createResturant(String name, int resturantId, int managerId) {

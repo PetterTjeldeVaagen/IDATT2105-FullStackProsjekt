@@ -4,6 +4,7 @@ public class ResturantResponse {
     private String name;
     private int resturantId;
 
+
     public ResturantResponse() { }
 
     public ResturantResponse(String name, int resturantId) {
@@ -26,5 +27,4 @@ public class ResturantResponse {
     public void setResturantId(int resturantId) {
         this.resturantId = resturantId;
     }
-
 }

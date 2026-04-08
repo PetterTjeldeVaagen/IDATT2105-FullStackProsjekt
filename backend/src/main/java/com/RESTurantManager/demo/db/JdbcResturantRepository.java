@@ -95,10 +95,10 @@ public class JdbcResturantRepository implements ResturantRepository {
     }
 
     @Override
-    public int getResturantIdByEmployeeId(int employeeId) {
+    public Resturant getResturantByEmployeeId(int employeeId) {
         return jdbcTemplate.queryForObject(
-                "SELECT resturant_id FROM employees WHERE employee_id = ?",
-                Integer.class,
+                "SELECT r.* FROM resturants r JOIN employees e ON r.resturant_id = e.resturant_id WHERE e.employee_id = ?",
+                new BeanPropertyRowMapper<>(Resturant.class),
                 employeeId
         );
     }

@@ -4,6 +4,7 @@ import Register from '@/views/register.vue'
 import Tasks from '@/views/tasks.vue'
 import deviations from '@/views/deviations.vue'
 import courses from '@/views/courses.vue'
+import joinResturant from '@/views/joinResturant.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -39,7 +40,13 @@ const router = createRouter({
       path: '/courses',
       name: 'courses',
       component: courses
+    },
+    {
+      path: '/joinResturant',
+      name: 'joinResturant',
+      component: joinResturant
     }
+
   ],
 })
 

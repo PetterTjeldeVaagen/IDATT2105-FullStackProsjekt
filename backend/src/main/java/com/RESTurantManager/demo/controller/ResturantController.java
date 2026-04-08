@@ -43,7 +43,7 @@ public class ResturantController {
     
     @PostMapping("/createResturant")
     public ResponseEntity<Void> createResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.createResturant(resturantRequest.getName(), resturantRequest.getResturantId(), resturantRequest.getManagerId());
+        resturantService.createResturant(resturantRequest.getName(), resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
         return ResponseEntity.ok().build();
     }
 
@@ -61,20 +61,19 @@ public class ResturantController {
 
     @PostMapping("/addManager")
     public ResponseEntity<Void> addManagerToResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.addManagerToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getManagerId()));
+        resturantService.addManagerToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/removeManager")
     public ResponseEntity<Void> removeManagerFromResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.removeManagerFromResturant(resturantRequest.getResturantId(), resturantRequest.getManagerId());
+        resturantService.removeManagerFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getResturantIdByEmployeeId/{employeeId}")
-    public ResponseEntity<ResturantResponse> getResturantIdByEmployeeId(@PathVariable int employeeId) {
-        int resturantId = resturantService.getResturantIdByEmployeeId(employeeId);
-        ResturantResponse resturantResponse = new ResturantResponse(null, resturantId);
+    @GetMapping("/getResturantByEmployeeId/{employeeId}")
+    public ResponseEntity<ResturantResponse> getResturantByEmployeeId(@PathVariable int employeeId) {
+        ResturantResponse resturantResponse = resturantService.getResturantByEmployeeId(employeeId);
         return ResponseEntity.ok(resturantResponse);
     }
 
