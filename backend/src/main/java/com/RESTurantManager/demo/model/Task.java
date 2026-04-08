@@ -25,18 +25,6 @@ public class Task {
         this.status = "PENDING";
         this.category = category;
     }
-    
-    public Task(String name, int taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
-        this.name = name;
-        this.taskId = taskId;
-        this.description = description;
-        this.finishBy = finishBy;
-        this.recurringFrequency = recurringFrequency;
-        this.recurring = recurring;
-        this.assignedTo = assignedTo;
-        this.status = "PENDING";
-        this.category = category;
-    }
 
     public String getName() {
         return name;

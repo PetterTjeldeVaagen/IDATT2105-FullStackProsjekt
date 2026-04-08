@@ -50,14 +50,13 @@
             description: description.value,
             finishBy: finishBy.value,
             recurring: recurring.value,
-            recurringFrequency: recurringFrequency.value,
+            recurringFrequency: recurringFrequency.value.toUpperCase(),
             assignedTo: Number(employeeId.value),
             status: "PENDING",
             category: category.value
         }
 
         try {
-            console.log("taskData:", JSON.stringify(taskData, null, 2))
             const response = await fetch("http://localhost:8080/task/createTask", {
                 method: "POST",
                 headers: {
@@ -85,7 +84,7 @@
             description: description.value,
             finishBy: finishBy.value,
             recurring: recurring.value,
-            recurringFrequency: recurringFrequency.value,
+            recurringFrequency: recurringFrequency.value.toUpperCase(),
             assignedTo: Number(employeeId.value),
             status: props.task.status,
             category: category.value

@@ -69,6 +69,43 @@ async function CompleteTask() {
       throw new Error(text || `HTTP error ${response.status}`)
     }
 
+    if (props.task.recurring) {
+      const recurringDaysMap = {
+        DAILY: 1,
+        WEEKLY: 7,
+        BIWEEKLY: 14,
+        MONTHLY: 30,
+        BIMONTHLY: 60,
+        QUARTERLY: 90,
+        EVERY_SIX_MONTHS: 182,
+        YEARLY: 365,
+        BIANNUALLY: 730
+      }
+      const newTaskData = {
+        name: props.task.name,
+        description: props.task.description,
+        finishBy: new Date(new Date(props.task.finishBy).getTime() + recurringDaysMap[props.task.recurringFrequency] * 24 * 60 * 60 * 1000),
+        recurring: true,
+        recurringFrequency: props.task.recurringFrequency,
+        assignedTo: props.task.assignedTo?.employeeId,
+        status: "PENDING",
+        category: props.task.category
+      }
+      const createResponse = await fetch(`http://localhost:8080/task/createTask`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(newTaskData)
+      })
+
+      if (!createResponse.ok) {
+        const text = await createResponse.text()
+        throw new Error(text || `HTTP error ${createResponse.status}`)
+      }
+    }
+
     emit("taskUpdated")
   } catch (err) {
     console.error("Error while completing task:", err)
@@ -79,7 +116,7 @@ async function CompleteTask() {
 <template>
  <createTaskComponent v-if="showCreateTask" :task="props.task" @cancel="showCreateTask = false" @taskUpdated="showCreateTask = false; emit('taskUpdated')" />
   <div class="task">
-    <div class="actions">
+    <div class="actions" v-if="$route.name === 'tasks'">
       <button @click="EditTask">Edit</button>
       <button @click="DeleteTask">Delete</button>
       <button @click="CompleteTask">Complete</button>
@@ -102,7 +139,7 @@ async function CompleteTask() {
         margin-bottom: 1rem;
         display: flex;
         font-family: Arial, Helvetica, sans-serif;
-        min-width: 20%;
+        min-width: 10%;
         max-width: 30%;
         width: fit-content;
     }

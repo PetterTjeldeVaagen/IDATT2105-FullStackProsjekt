@@ -15,16 +15,15 @@ public class JdbcTaskRepository implements TaskRepository {
     @Override
     public void save(Task task) {
         jdbcTemplate.update(
-            "INSERT INTO tasks (name, task_id, description, assigned_to, due_date, category, status, recurring, recurring_frequency) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO tasks (name, description, assigned_to, due_date, category, status, recurring, recurring_frequency) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             task.getName(),
-            task.getTaskId(),
             task.getDescription(),
             task.getAssignedTo() != null ? task.getAssignedTo().getEmployeeId() : null,
             task.getFinishBy(),
             task.getCategory(),
             task.getStatus(),
             task.getRecurring(),
-            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name().toUpperCase() : null
+            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name() : null
         );
     }
 
@@ -43,7 +42,7 @@ public class JdbcTaskRepository implements TaskRepository {
                     task.setRecurring(rs.getBoolean("recurring"));
                     String recurringFrequency = rs.getString("recurring_frequency");
                     if (recurringFrequency != null) {
-                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency.toLowerCase()));
+                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency));
                     }
                     int assignedTo = rs.getInt("assigned_to");
                     if (!rs.wasNull()) {
@@ -77,7 +76,7 @@ public class JdbcTaskRepository implements TaskRepository {
                     task.setRecurring(rs.getBoolean("recurring"));
                     String recurringFrequency = rs.getString("recurring_frequency");
                     if (recurringFrequency != null) {
-                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency.toLowerCase()));
+                        task.setRecurringFrequency(com.RESTurantManager.demo.model.RecurringFrequency.valueOf(recurringFrequency));
                     }
                     com.RESTurantManager.demo.model.Employee employee = new com.RESTurantManager.demo.model.Employee();
                     employee.setEmployeeId(employeeId);
@@ -99,7 +98,7 @@ public class JdbcTaskRepository implements TaskRepository {
             task.getCategory(),
             task.getStatus(),
             task.getRecurring(),
-            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name().toUpperCase() : null,
+            task.getRecurringFrequency() != null ? task.getRecurringFrequency().name() : null,
             task.getTaskId()
         );
     }
