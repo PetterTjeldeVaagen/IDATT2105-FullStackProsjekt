@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Resturant {
     private String name;
     private int resturantId;
+    private String joinCode;
     private ArrayList<Employee> employees;
     private ArrayList<Employee> managers;
     private ArrayList<Task> checklist;
@@ -13,9 +14,10 @@ public class Resturant {
 
     public Resturant() { }
     
-    public Resturant(String name, int resturantId, Employee manager) {
+    public Resturant(String name, int resturantId, Employee manager, String joinCode) {
         this.name = name;
         this.resturantId = resturantId;
+        this.joinCode = joinCode;
         this.employees = new ArrayList<>();
         this.managers = new ArrayList<>();
         this.checklist = new ArrayList<>();
@@ -99,5 +101,13 @@ public class Resturant {
 
     public void addDeviation(Deviation deviation) {
         this.registeredDeviations.add(deviation);
+    }
+
+    public String getJoinCode() {
+        return joinCode;
+    }
+
+    public void setJoinCode(String joinCode) {
+        this.joinCode = joinCode;
     }
 }

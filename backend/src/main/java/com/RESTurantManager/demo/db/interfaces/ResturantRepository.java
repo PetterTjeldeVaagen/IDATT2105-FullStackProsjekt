@@ -22,5 +22,7 @@ public interface ResturantRepository {
 
     Resturant getResturantById(int resturantId);
 
-    void createResturant(String name, int managerId);
+    int createResturant(String name, int managerId, String joinCode);
+
+    int getResturantIdByJoinCode(String joinCode);
 }

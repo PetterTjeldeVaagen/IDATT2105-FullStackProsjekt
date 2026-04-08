@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.RESTurantManager.demo.db.requests.ResturantRequest;
 import com.RESTurantManager.demo.db.responses.ResturantResponse;
 import com.RESTurantManager.demo.model.Employee;
+import com.RESTurantManager.demo.security.JoinCodeGenerator;
 import com.RESTurantManager.demo.service.EmployeeService;
 import com.RESTurantManager.demo.service.ResturantService;
 
@@ -43,7 +44,8 @@ public class ResturantController {
     
     @PostMapping("/createResturant")
     public ResponseEntity<Void> createResturant(@RequestBody ResturantRequest resturantRequest) {
-        resturantService.createResturant(resturantRequest.getName(), resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
+        String joinCode = JoinCodeGenerator.generateJoinCode();
+        resturantService.createResturant(resturantRequest.getName(), resturantRequest.getEmployeeId(), joinCode);
         return ResponseEntity.ok().build();
     }
 
@@ -81,5 +83,17 @@ public class ResturantController {
     public ResponseEntity<ResturantResponse> getResturantById(@PathVariable int resturantId) {
         ResturantResponse resturantResponse = resturantService.getResturantById(resturantId);
         return ResponseEntity.ok(resturantResponse);
+    }
+
+    @PostMapping("/joinResturant/{joinCode}/{employeeId}")
+    public ResponseEntity<Void> joinResturant(@PathVariable String joinCode, @PathVariable int employeeId) {
+        resturantService.joinResturant(joinCode, employeeId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getJoinCode/{resturantId}")
+    public ResponseEntity<String> getJoinCode(@PathVariable int resturantId) {
+        ResturantResponse resturantResponse = resturantService.getResturantById(resturantId);
+        return ResponseEntity.ok(resturantResponse.getJoinCode());
     }
 }

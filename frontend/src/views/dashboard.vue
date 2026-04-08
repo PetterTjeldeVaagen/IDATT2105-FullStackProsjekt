@@ -43,6 +43,7 @@ async function getTasks() {
 const isManager = ref(false)
 const resturantName = ref("")
 const resturantId = ref(null)
+const joinCode = ref("")
 async function getResturantInfo() {
   try {
     const response = await fetch(`http://localhost:8080/resturant/getResturantByEmployeeId/${employeeId.value}`, {
@@ -60,6 +61,7 @@ async function getResturantInfo() {
 
     resturantName.value = resturantInfo.name
     resturantId.value = resturantInfo.resturantId
+    joinCode.value = resturantInfo.joinCode
 
     try {
       const managerResponse = await fetch(`http://localhost:8080/resturant/getManagers/${resturantId.value}`, {
@@ -141,7 +143,7 @@ onMounted(async () => {
     <h2>{{ resturantName }}</h2>
 
     <div v-if="isManager">
-
+      <p>The resturants join code is: {{ joinCode }}</p>
     </div>
 
     <div id="notManager" v-if="!isManager">

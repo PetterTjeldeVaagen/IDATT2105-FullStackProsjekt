@@ -47,11 +47,12 @@ public class ResturantService {
         Resturant resturant = resturantRepository.getResturantByEmployeeId(employeeId);
         ResturantResponse resturantResponse = new ResturantResponse(resturant.getName());
         resturantResponse.setResturantId(resturant.getResturantId());
+        resturantResponse.setJoinCode(resturant.getJoinCode());
         return resturantResponse;
     }
 
-    public void createResturant(String name, int resturantId, int managerId) {
-        resturantRepository.createResturant(name, managerId);
+    public void createResturant(String name, int managerId, String joinCode) {
+        int resturantId = resturantRepository.createResturant(name, managerId, joinCode);
         addManagerToResturant(resturantId, employeeService.getEmployeeById(managerId));
     }
 
@@ -59,7 +60,13 @@ public class ResturantService {
         Resturant resturant = resturantRepository.getResturantById(resturantId);
         ResturantResponse resturantResponse = new ResturantResponse(resturant.getName());
         resturantResponse.setResturantId(resturant.getResturantId());
+        resturantResponse.setJoinCode(resturant.getJoinCode());
         return resturantResponse;
+    }
+
+    public void joinResturant(String joinCode, int employeeId) {
+        int resturantId = resturantRepository.getResturantIdByJoinCode(joinCode);
+        addEmployeeToResturant(resturantId, employeeService.getEmployeeById(employeeId));
     }
 
 }

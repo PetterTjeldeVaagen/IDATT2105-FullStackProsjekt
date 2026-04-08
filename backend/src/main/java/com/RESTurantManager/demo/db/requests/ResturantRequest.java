@@ -4,13 +4,14 @@ public class ResturantRequest {
     private String name;
     private int resturantId;
     private int employeeId;
+    private String joinCode;
 
     public ResturantRequest() { }
 
-    public ResturantRequest(String name, int resturantId, int employeeId) {
+    public ResturantRequest(String name, int employeeId, String joinCode) {
         this.name = name;
-        this.resturantId = resturantId;
         this.employeeId = employeeId;
+        this.joinCode = joinCode;
     }
 
     public String getName() {
@@ -35,5 +36,13 @@ public class ResturantRequest {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public String getJoinCode() {
+        return joinCode;
+    }
+
+    public void setJoinCode(String joinCode) {
+        this.joinCode = joinCode;
     }
 }

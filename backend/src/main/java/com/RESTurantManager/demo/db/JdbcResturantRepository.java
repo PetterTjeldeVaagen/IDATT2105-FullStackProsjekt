@@ -40,12 +40,15 @@ public class JdbcResturantRepository implements ResturantRepository {
     }
 
     @Override
-    public void createResturant(String name, int managerId) {
+    public int createResturant(String name, int managerId, String joinCode) {
         jdbcTemplate.update(
-            "INSERT INTO resturants (name, location) VALUES (?, ?)",
+            "INSERT INTO resturants (name, location, join_code) VALUES (?, ?, ?)",
             name,
-            "Unknown"
+            "Unknown",
+            joinCode
+
         );
+        return jdbcTemplate.queryForObject("SELECT resturant_id FROM resturants WHERE join_code = ?", Integer.class, joinCode);
     }
 
     @Override
@@ -103,4 +106,14 @@ public class JdbcResturantRepository implements ResturantRepository {
                 resturantId
         );
     }
+
+    @Override
+    public int getResturantIdByJoinCode(String joinCode) {
+        return jdbcTemplate.queryForObject(
+                "SELECT resturant_id FROM resturants WHERE join_code = ?",
+                Integer.class,
+                joinCode
+        );
+    }
+
 }

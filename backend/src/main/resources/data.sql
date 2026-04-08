@@ -1,12 +1,12 @@
-INSERT INTO resturants (name, location)
-SELECT 'Egon Trondheim', 'Trondheim'
+INSERT INTO resturants (name, location, join_code)
+SELECT 'Egon Trondheim', 'Trondheim', '1234567890'
 WHERE NOT EXISTS (
     SELECT 1 FROM resturants
     WHERE name = 'Egon Trondheim' AND location = 'Trondheim'
 );
 
-INSERT INTO resturants (name, location)
-SELECT 'Sabrura Solsiden', 'Trondheim'
+INSERT INTO resturants (name, location, join_code)
+SELECT 'Sabrura Solsiden', 'Trondheim', 'SAB1234567'
 WHERE NOT EXISTS (
     SELECT 1 FROM resturants
     WHERE name = 'Sabrura Solsiden' AND location = 'Trondheim'
