@@ -2,11 +2,6 @@
   <div class="login-container">
     <form class="login-box" @submit.prevent="login">
       <h1>RESTurant Manager</h1>
-      <div>
-        <p>ola@test.no</p>
-        <p>Ola Nordmann</p>
-        <p>pass123</p>
-      </div>
 
       <label for="email">Email</label>
       <input

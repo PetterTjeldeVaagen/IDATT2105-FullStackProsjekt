@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar.vue"
 import taskComponent from "@/components/tasks/taskComponent.vue"
 import courseComponent from "@/components/courses/courseComponent.vue"
 import deviationComponent from "@/components/deviations/deviationComponent.vue"
+import employeeComponent from "@/components/employees/employeeComponent.vue"
 
 const router = useRouter()
 
@@ -45,7 +46,7 @@ async function getTasks() {
 
 const isManager = ref(false)
 const resturantName = ref("")
-const resturantId = ref(null)
+const resturantId = ref(sessionStorage.getItem("restaurantId") || "")
 const joinCode = ref("")
 async function getResturantInfo() {
   try {
@@ -64,6 +65,7 @@ async function getResturantInfo() {
 
     resturantName.value = resturantInfo.name
     resturantId.value = resturantInfo.resturantId
+    sessionStorage.setItem("restaurantId", resturantInfo.resturantId)
     joinCode.value = resturantInfo.joinCode
 
     try {
@@ -256,7 +258,7 @@ onMounted(async () => {
             <p v-if="error" class="error">{{ error }}</p>
             <ul v-else class="employees">
               <li v-for="employee in employees" :key="employee.employeeId">
-                {{ employee.name }} - {{ employee.email }} - {{ employee.role }}
+                <employeeComponent :employee="employee" @employeeRemoved="getEmployees" />
               </li>
             </ul>
           </div>
@@ -316,11 +318,10 @@ h2 {
 }
 
 #joinCodeCard {
-  max-width: 30rem;
+  max-width: 24rem;
 }
 
-#managerGrid,
-#notManager {
+#managerGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: minmax(260px, 1fr);
@@ -328,7 +329,38 @@ h2 {
   height: calc(100vh - 220px);
 }
 
-.dashboardCard {
+#notManager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "tasks deviations"
+    "courses deviations";
+  gap: 1rem;
+  height: calc(100vh - 220px);
+}
+
+#employeeTasks {
+  grid-area: tasks;
+}
+
+#employeeCourses {
+  grid-area: courses;
+}
+
+#notManager .recentDeviations {
+  grid-area: deviations;
+}
+
+.dashboardCard,
+#employeeTasks,
+#employeeCourses,
+#notManager .recentDeviations,
+#taskForToday,
+#managerDeviations,
+#coursesClosestToExpiring,
+#employeeList,
+#joinCodeCard {
   border: yellow 2px solid;
   border-radius: 8px;
   padding: 1rem;
