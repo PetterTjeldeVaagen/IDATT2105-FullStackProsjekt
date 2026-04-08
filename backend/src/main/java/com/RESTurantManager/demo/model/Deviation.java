@@ -13,9 +13,8 @@ public class Deviation {
         this.deviationId = 0; 
     }
     
-    public Deviation(String name, int deviationId, String description, Employee registeredBy, Date dateRegistered) {
+    public Deviation(String name, String description, Employee registeredBy, Date dateRegistered) {
         this.name = name;
-        this.deviationId = deviationId;
         this.description = description;
         this.registeredBy = registeredBy;
         this.dateRegistered = dateRegistered;

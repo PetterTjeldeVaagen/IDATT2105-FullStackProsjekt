@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue"
-import createTaskComponent from "@/components/createTaskComponent.vue"
+import createTaskComponent from "@/components/tasks/createTaskComponent.vue"
 
 const showCreateTask = ref(false)
 const emit = defineEmits(["taskUpdated"])

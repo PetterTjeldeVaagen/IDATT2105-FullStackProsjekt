@@ -32,7 +32,7 @@ public class DeviationController {
     @PostMapping("/createDeviation") 
     public ResponseEntity<DeviationResponse> createDeviation(@RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
-        Deviation deviation = new Deviation(deviationRequest.getTitle(),deviationRequest.getDeviationId(), deviationRequest.getDescription(), 
+        Deviation deviation = new Deviation(deviationRequest.getTitle(), deviationRequest.getDescription(), 
                                             employee, deviationRequest.getDate());
         deviationService.createDeviation(deviation);
         DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
@@ -49,6 +49,31 @@ public class DeviationController {
     @GetMapping("/getDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> getDeviation(@PathVariable int deviationId) {
         Deviation deviation = deviationService.getDeviationById(deviationId);
+        DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
+                                                                    deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
+        return ResponseEntity.ok(deviationResponse);
+    }
+
+    @GetMapping("/getDeviationByEmployee/{employeeId}")
+    public ResponseEntity<DeviationResponse[]> getDeviationsByEmployeeId(@PathVariable int employeeId) {
+        Deviation[] deviations = deviationService.getDeviationsByEmployeeId(employeeId);
+        DeviationResponse[] deviationResponses = new DeviationResponse[deviations.length];
+        for (int i = 0; i < deviations.length; i++) {
+            Deviation deviation = deviations[i];
+            DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
+                                                                        deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
+            deviationResponses[i] = deviationResponse;
+        }
+        return ResponseEntity.ok(deviationResponses);
+    }
+
+    @PostMapping("/updateDeviation/{deviationId}")
+    public ResponseEntity<DeviationResponse> updateDeviation(@PathVariable int deviationId, @RequestBody DeviationRequest deviationRequest) {
+        Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
+        Deviation deviation = new Deviation(deviationRequest.getTitle(), deviationRequest.getDescription(), 
+                                            employee, deviationRequest.getDate());
+        deviation.setDeviationId(deviationId);
+        deviationService.updateDeviation(deviation);
         DeviationResponse deviationResponse = new DeviationResponse(deviation.getDescription(), deviation.getDateRegistered(), deviation.getName(), 
                                                                     deviation.getRegisteredBy().getEmployeeId(), deviation.getDeviationId());
         return ResponseEntity.ok(deviationResponse);

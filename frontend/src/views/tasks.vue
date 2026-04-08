@@ -1,7 +1,7 @@
 <script setup>
 import Navbar from '@/components/navbar.vue';
-import taskComponent from '@/components/taskComponent.vue';
-import createTaskComponent from '@/components/createTaskComponent.vue';
+import taskComponent from '@/components/tasks/taskComponent.vue';
+import createTaskComponent from '@/components/tasks/createTaskComponent.vue';
 import { onMounted, ref } from 'vue';
 const tasks = ref([])
 const error = ref("")
@@ -29,7 +29,7 @@ async function getTasks() {
       }
     }
   } catch (err) {
-    console.error("Feil ved henting av oppgaver:", err)
+    console.error("Error while fetching tasks:", err)
     error.value = err.message
   }
 }

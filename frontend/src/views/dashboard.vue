@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import Navbar from "@/components/navbar.vue"
-import taskComponent from "@/components/taskComponent.vue"
+import taskComponent from "@/components/tasks/taskComponent.vue"
 
 const router = useRouter()
 

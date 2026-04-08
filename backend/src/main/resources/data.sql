@@ -73,7 +73,7 @@ WHERE e.email = 'kari@test.no'
   );
 
 INSERT INTO deviations (title, description, registered_by, date_registered)
-SELECT 'For høy temperatur', 'Kjøleskapet var på 10 grader', e.employee_id, NOW()
+SELECT 'For høy temperatur', 'Kjøleskapet var på 10 grader', e.employee_id, DATEADD('DAY', -1, CURRENT_DATE)
 FROM employees e
 WHERE e.email = 'ola@test.no'
   AND NOT EXISTS (
@@ -82,7 +82,16 @@ WHERE e.email = 'ola@test.no'
   );
 
 INSERT INTO deviations (title, description, registered_by, date_registered)
-SELECT 'Manglende vask', 'Vaskerutine ble ikke gjennomført', e.employee_id, NOW()
+SELECT 'Manglende vask', 'Vaskerutine ble ikke gjennomført', e.employee_id, DATEADD('DAY', -5, CURRENT_DATE)
+FROM employees e
+WHERE e.email = 'ola@test.no'
+  AND NOT EXISTS (
+      SELECT 1 FROM deviations
+      WHERE title = 'Manglende vask' AND registered_by = e.employee_id
+  );
+
+INSERT INTO deviations (title, description, registered_by, date_registered)
+SELECT 'Manglende vask', 'Vaskerutine ble ikke gjennomført', e.employee_id, DATEADD('DAY', -3, CURRENT_DATE)
 FROM employees e
 WHERE e.email = 'kari@test.no'
   AND NOT EXISTS (

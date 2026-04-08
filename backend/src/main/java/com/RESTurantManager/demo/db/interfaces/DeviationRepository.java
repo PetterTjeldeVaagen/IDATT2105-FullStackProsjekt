@@ -8,4 +8,8 @@ public interface DeviationRepository {
     Deviation findById(int id);
 
     void deleteById(int id);
+
+    void update(Deviation deviation);
+
+    Deviation[] findByEmployeeId(int employeeId);
 }
