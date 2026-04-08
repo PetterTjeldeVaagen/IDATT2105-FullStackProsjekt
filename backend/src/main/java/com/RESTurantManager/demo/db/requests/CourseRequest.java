@@ -10,18 +10,16 @@ public class CourseRequest {
     private Date completionDate;
     private Date expirationDate;
     private File documentation;
-    private int courseId;
 
     public CourseRequest() { }
 
-    public CourseRequest(String name, String description, int employeeId, Date completionDate, Date expirationDate, File documentation, int courseId) {
+    public CourseRequest(String name, String description, int employeeId, Date completionDate, Date expirationDate, File documentation) {
         this.name = name;
         this.description = description;
         this.employeeId = employeeId;
         this.completionDate = completionDate;
         this.expirationDate = expirationDate;
         this.documentation = documentation;
-        this.courseId = courseId;
     }
 
     public String getName() {
@@ -70,13 +68,5 @@ public class CourseRequest {
 
     public void setDocumentation(File documentation) {
         this.documentation = documentation;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
     }
 }

@@ -9,6 +9,7 @@ public class CourseResponse {
     private Date completionDate;
     private Date expirationDate;
     private String response;
+    private int courseId;
 
     public CourseResponse() { }
 
@@ -16,12 +17,13 @@ public class CourseResponse {
         this.response = response;
     }
 
-    public CourseResponse(String name, String description, int employeeId, Date completionDate, Date expirationDate) {
+    public CourseResponse(String name, String description, int employeeId, Date completionDate, Date expirationDate, int courseId) {
         this.name = name;
         this.description = description;
         this.employeeId = employeeId;
         this.completionDate = completionDate;
         this.expirationDate = expirationDate;
+        this.courseId = courseId;
     }
 
     public String getName() {
@@ -70,5 +72,13 @@ public class CourseResponse {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }

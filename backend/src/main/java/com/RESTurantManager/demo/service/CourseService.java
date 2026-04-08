@@ -24,4 +24,12 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
+    public void updateCourse(Course course) {
+        courseRepository.update(course);
+    }
+
+    public Course[] getCoursesByEmployeeId(int employeeId) {
+        return courseRepository.findByEmployeeId(employeeId);
+    }
+
 }

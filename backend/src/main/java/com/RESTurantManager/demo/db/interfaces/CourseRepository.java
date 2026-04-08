@@ -8,4 +8,8 @@ public interface CourseRepository {
     Course findById(int id);
 
     void deleteById(int id);
+
+    void update(Course course);
+
+    Course[] findByEmployeeId(int employeeId);
 }

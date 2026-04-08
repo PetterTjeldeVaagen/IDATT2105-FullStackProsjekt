@@ -14,7 +14,7 @@ public class Course {
 
     public Course() { }
     
-    public Course(String name, int courseId, Date dateCompleted, Date dateExpires, File documentation, String description, int employeeId) {
+    public Course(String name, Date dateCompleted, Date dateExpires, File documentation, String description, int employeeId) {
         this.name = name;
         this.courseId = courseId;
         this.dateCompleted = dateCompleted;
