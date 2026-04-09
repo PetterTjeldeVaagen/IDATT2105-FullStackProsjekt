@@ -12,6 +12,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -66,6 +67,7 @@ class EmployeeControllerTest {
 
     @Test
     @DisplayName("deleteEmployee should return 200")
+    @WithMockUser(roles = "MANAGER")
     void deleteEmployeeTest() throws Exception {
         mockMvc.perform(delete("/employee/deleteEmployee/1"))
                 .andExpect(status().isOk());
@@ -100,6 +102,7 @@ class EmployeeControllerTest {
 
     @Test
     @DisplayName("getEmployeesByResturantId should return list of employees")
+    @WithMockUser(roles = "MANAGER")
     void getEmployeesByResturantIdTest() throws Exception {
         Employee employee1 = new Employee();
         employee1.setEmployeeId(1);

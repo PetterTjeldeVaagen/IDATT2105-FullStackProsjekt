@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.RESTurantManager.demo.db.requests.TaskRequest;
 import com.RESTurantManager.demo.model.Employee;
@@ -48,6 +49,7 @@ class TaskControllerTest {
 
     @Test
     @DisplayName("createTask should return created task response")
+    @WithMockUser(roles = "MANAGER")
     void createTaskTest() throws Exception {
         TaskRequest request = new TaskRequest();
         request.setName("Test Task");
@@ -81,6 +83,7 @@ class TaskControllerTest {
 
     @Test
     @DisplayName("deleteTask should return 200")
+    @WithMockUser(roles = "MANAGER")
     void deleteTaskTest() throws Exception {
         mockMvc.perform(delete("/task/deleteTask/1"))
                 .andExpect(status().isOk());
@@ -204,6 +207,7 @@ class TaskControllerTest {
 
     @Test
     @DisplayName("updateTask should return updated task response")
+    @WithMockUser(roles = "MANAGER")
     void updateTaskTest() throws Exception {
         TaskRequest request = new TaskRequest();
         request.setName("Updated Task");
