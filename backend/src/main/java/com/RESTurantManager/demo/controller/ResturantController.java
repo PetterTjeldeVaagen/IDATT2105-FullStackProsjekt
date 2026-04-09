@@ -3,6 +3,7 @@ package com.RESTurantManager.demo.controller;
 import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.ResturantRequest;
 import com.RESTurantManager.demo.db.responses.ResturantResponse;
@@ -23,6 +18,11 @@ import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.security.JoinCodeGenerator;
 import com.RESTurantManager.demo.service.EmployeeService;
 import com.RESTurantManager.demo.service.ResturantService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Controller for handling restaurant related endpoints such as creating a restaurant, adding/removing employees and managers, and retrieving restaurant information.
@@ -104,6 +104,7 @@ public class ResturantController {
      * @return ResponseEntity indicating the result of the remove operation
      */
     @Operation(summary = "Remove an employee from a restaurant")
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/removeEmployee")
     public ResponseEntity<Void> removeEmployeeFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeEmployeeFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
@@ -116,6 +117,7 @@ public class ResturantController {
      * @return ResponseEntity indicating the result of the add operation
      */
     @Operation(summary = "Add a manager to a restaurant")
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/addManager")
     public ResponseEntity<Void> addManagerToResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.addManagerToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
@@ -128,6 +130,7 @@ public class ResturantController {
      * @return ResponseEntity indicating the result of the remove operation
      */
     @Operation(summary = "Remove a manager from a restaurant")
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/removeManager")
     public ResponseEntity<Void> removeManagerFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeManagerFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());

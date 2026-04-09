@@ -36,7 +36,8 @@ public class AuthenticationServiceTest {
     @Test
     public void testGetJWTToken() {
         String email = employee.getEmail();
-        String token = authenticationService.getJWTToken(email);
+        String role = employee.getRole();
+        String token = authenticationService.getJWTToken(email, role);
         assertNotNull(token);
         assertFalse(token.isEmpty());
     }
@@ -44,7 +45,8 @@ public class AuthenticationServiceTest {
     @Test
     public void testValidateToken() {
         String email = employee.getEmail();
-        String token = authenticationService.getJWTToken(email);
+        String role = employee.getRole();
+        String token = authenticationService.getJWTToken(email, role);
         assertTrue(authenticationService.validateToken(token));
     }
 
@@ -57,7 +59,8 @@ public class AuthenticationServiceTest {
     @Test
     public void testGetEmailFromToken() {
         String expectedEmail = employee.getEmail();
-        String token = authenticationService.getJWTToken(expectedEmail);
+        String role = employee.getRole();
+        String token = authenticationService.getJWTToken(expectedEmail, role);
         String actualEmail = authenticationService.getEmailFromToken(token);
 
         assertEquals(expectedEmail, actualEmail);

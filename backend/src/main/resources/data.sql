@@ -13,7 +13,7 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO employees (name, email, password, role, phone_number, resturant_id)
-SELECT 'Ola Nordmann', 'ola@test.no', 'pass123', 'EMPLOYEE', '12345678', r.resturant_id
+SELECT 'Ola Nordmann', 'ola@test.no', '$2a$10$1RsCFyvPHDGKjffONRZ2hOmF3s8RGNmBGLxZYsk/bCO63hE3VHVFG', 'EMPLOYEE', '12345678', r.resturant_id
 FROM resturants r
 WHERE r.name = 'Egon Trondheim' AND r.location = 'Trondheim'
   AND NOT EXISTS (
@@ -21,7 +21,7 @@ WHERE r.name = 'Egon Trondheim' AND r.location = 'Trondheim'
   );
 
 INSERT INTO employees (name, email, password, role, phone_number, resturant_id)
-SELECT 'Kari Hansen', 'kari@test.no', 'pass123', 'MANAGER', '87654321', r.resturant_id
+SELECT 'Kari Hansen', 'kari@test.no', '$2a$10$1RsCFyvPHDGKjffONRZ2hOmF3s8RGNmBGLxZYsk/bCO63hE3VHVFG', 'MANAGER', '87654321', r.resturant_id
 FROM resturants r
 WHERE r.name = 'Egon Trondheim' AND r.location = 'Trondheim'
   AND NOT EXISTS (
@@ -29,7 +29,7 @@ WHERE r.name = 'Egon Trondheim' AND r.location = 'Trondheim'
   );
 
 INSERT INTO employees (name, email, password, role, phone_number, resturant_id)
-SELECT 'Per Olsen', 'per@test.no', 'pass123', 'EMPLOYEE', '23456789', r.resturant_id
+SELECT 'Per Olsen', 'per@test.no', '$2a$10$1RsCFyvPHDGKjffONRZ2hOmF3s8RGNmBGLxZYsk/bCO63hE3VHVFG', 'EMPLOYEE', '23456789', r.resturant_id
 FROM resturants r
 WHERE r.name = 'Sabrura Solsiden' AND r.location = 'Trondheim'
   AND NOT EXISTS (

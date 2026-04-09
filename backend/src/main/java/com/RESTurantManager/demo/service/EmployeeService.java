@@ -80,7 +80,7 @@ public class EmployeeService {
 
         return new LoginResponse(
             "Login successful",
-            authenticationService.getJWTToken(existing.getEmail()),
+            authenticationService.getJWTToken(existing.getEmail(), existing.getRole()),
             existing.getEmployeeId(),
             existing.getEmail(),
             existing.getName()

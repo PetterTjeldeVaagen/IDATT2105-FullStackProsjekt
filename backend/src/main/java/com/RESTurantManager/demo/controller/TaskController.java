@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.TaskRequest;
 import com.RESTurantManager.demo.db.responses.TaskResponse;
@@ -26,6 +21,9 @@ import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.model.Task;
 import com.RESTurantManager.demo.service.EmployeeService;
 import com.RESTurantManager.demo.service.TaskService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Controller for handling task related endpoints such as creating, updating, deleting and retrieving tasks.
@@ -73,6 +71,7 @@ public class TaskController {
      * @return ResponseEntity indicating the result of the delete operation
      */
     @Operation(summary = "Delete a task by its ID")
+    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/deleteTask/{taskId}")
     public ResponseEntity<TaskResponse> deleteTask(@PathVariable int taskId) {
         taskService.deleteTaskById(taskId);
@@ -144,6 +143,7 @@ public class TaskController {
      * @return ResponseEntity containing the updated task response
      */
     @Operation(summary = "Update a task by its ID")
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/updateTask/{taskId}")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable int taskId, @RequestBody TaskRequest taskRequest) {
         Task task = taskService.updateTask(taskId, taskRequest);

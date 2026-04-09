@@ -7,6 +7,8 @@ import courses from '@/views/courses.vue'
 import joinResturant from '@/views/joinResturant.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
+const publicRoutes = ['login', 'register']
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -48,6 +50,17 @@ const router = createRouter({
     }
 
   ],
+})
+
+router.beforeEach((to) => {
+  const token = sessionStorage.getItem('token')
+  const isPublic = publicRoutes.includes(to.name as string)
+
+  if (!isPublic && !token) {
+    return { name: 'login' }
+  }
+
+  return true
 })
 
 export default router

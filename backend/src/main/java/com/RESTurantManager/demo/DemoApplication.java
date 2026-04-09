@@ -2,11 +2,13 @@ package com.RESTurantManager.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 /**
  * Main application class for the RESTurant Manager application. This class is responsible for bootstrapping the Spring Boot application.
  */
 @SpringBootApplication
+@EnableMethodSecurity
 public class DemoApplication {
 
 	/**

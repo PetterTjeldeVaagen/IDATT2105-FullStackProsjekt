@@ -35,14 +35,29 @@ public class AuthenticationService {
      * @param email the email for which to generate the JWT token
      * @return the generated JWT token
      */
-    public String getJWTToken(String email) {
+    public String getJWTToken(String email, String role) {
         String token = Jwts.builder()
                 .setSubject(email)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(secretKey)
                 .compact();
         return token;
+    }
+
+    /**
+     * Extracts the role from the given JWT token.
+     * @param token the JWT token from which to extract the role
+     * @return the role extracted from the token
+     */
+    public String getRoleFromToken(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(secretKey)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .get("role", String.class);
     }
 
     /**

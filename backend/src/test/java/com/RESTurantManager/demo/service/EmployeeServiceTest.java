@@ -84,7 +84,7 @@ public class EmployeeServiceTest {
 
         when(employeeRepository.findByEmail("test@example.com")).thenReturn(employee);
         when(passwordEncoder.matches("password", "encodedPassword")).thenReturn(true);
-        when(authenticationService.getJWTToken("test@example.com")).thenReturn("fake-jwt-token");
+        when(authenticationService.getJWTToken("test@example.com", "MANAGER")).thenReturn("fake-jwt-token");
 
         LoginResponse response = employeeService.login(loginRequest);
 
@@ -127,7 +127,7 @@ public class EmployeeServiceTest {
         });
 
         assertEquals("Wrong password or email", exception.getMessage());
-        verify(authenticationService, never()).getJWTToken("test@example.com");
+        verify(authenticationService, never()).getJWTToken("test@example.com", "MANAGER");
     }
 
     @Test
