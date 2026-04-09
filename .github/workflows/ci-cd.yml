@@ -108,9 +108,14 @@ jobs:
           cp -r downloaded/reports/apidocs/* site/javadoc/ || true
           
           OPENAPI_FILE=$(find downloaded -name openapi.json | head -n 1)
-          if [ -n "$OPENAPI_FILE" ]; then
-            cp "$OPENAPI_FILE" site/swagger/openapi.json
+          if [ -z "$OPENAPI_FILE" ]; then
+            echo "ERROR: openapi.json not found in downloaded artifacts"
+            echo "Downloaded files were:"
+            find downloaded -type f | sort || true
+            exit 1
           fi
+
+          cp "$OPENAPI_FILE" site/swagger/openapi.json
 
           cp backend/src/main/resources/static/fullStackKlasse.png site/diagram/fullStackKlasse.png || true
 
@@ -195,6 +200,8 @@ jobs:
           EOF
 
           touch site/.nojekyll
+          echo "=== Final site files ==="
+          find site -type f | sort
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

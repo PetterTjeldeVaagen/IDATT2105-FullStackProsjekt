@@ -22,7 +22,7 @@ Made by Petter Tjelde Vaagen
 - JWT authentication
 
 ### Documentation
-- [Javadoc] (https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
+- [Javadoc](https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
 - [Tests](https://blinkendelys.com/IDATT2105-FullStackProsjekt/jacoco/index.html)
 - [Endpoints](https://blinkendelys.com/IDATT2105-FullStackProsjekt/swagger/index.html)
 - [Diagram](https://blinkendelys.com/IDATT2105-FullStackProsjekt/diagram/index.html)
