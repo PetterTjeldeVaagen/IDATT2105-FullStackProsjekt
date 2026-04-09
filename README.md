@@ -24,8 +24,8 @@ Made by Petter Tjelde Vaagen
 ### Documentation
 - [Javadoc] (https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
 - [Tests](https://blinkendelys.com/IDATT2105-FullStackProsjekt/jacoco/index.html)
-- Endpoints
-- Class diagram
+- [Endpoints](https://blinkendelys.com/IDATT2105-FullStackProsjekt/swagger/index.html)
+- [Diagram](https://blinkendelys.com/IDATT2105-FullStackProsjekt/diagram/index.html)
 
 ### Database
 - H2 (currently configured for local development and testing)
