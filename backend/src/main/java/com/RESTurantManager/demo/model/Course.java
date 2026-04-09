@@ -16,7 +16,6 @@ public class Course {
     
     public Course(String name, Date dateCompleted, Date dateExpires, File documentation, String description, int employeeId) {
         this.name = name;
-        this.courseId = courseId;
         this.dateCompleted = dateCompleted;
         this.dateExpires = dateExpires;
         this.documentation = documentation;

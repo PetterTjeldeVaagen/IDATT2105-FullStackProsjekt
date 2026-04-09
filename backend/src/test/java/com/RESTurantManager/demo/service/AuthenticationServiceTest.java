@@ -1,21 +1,19 @@
 package com.RESTurantManager.demo.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.RESTurantManager.demo.db.interfaces.EmployeeRepository;
 import com.RESTurantManager.demo.model.Employee;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
-    @Mock
-    private EmployeeRepository employeeRepository;
 
     private AuthenticationService authenticationService;
 
