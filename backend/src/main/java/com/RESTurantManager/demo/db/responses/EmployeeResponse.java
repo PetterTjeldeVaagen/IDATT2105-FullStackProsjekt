@@ -7,18 +7,16 @@ public class EmployeeResponse {
     private int resturantId;
     private String role;
     private int employeeId;
-    private String password;
 
     public EmployeeResponse() { }
 
-    public EmployeeResponse(String name, String email, String phoneNumber, int resturantId, String role, int employeeId, String password) {
+    public EmployeeResponse(String name, String email, String phoneNumber, int resturantId, String role, int employeeId) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.resturantId = resturantId;
         this.role = role;
         this.employeeId = employeeId;
-        this.password = password;
     }
 
     public String getName() {
@@ -66,14 +64,6 @@ public class EmployeeResponse {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
 

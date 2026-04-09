@@ -7,25 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.RESTurantManager.demo.model.Employee;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthenticationServiceTest {
-
     private AuthenticationService authenticationService;
-
-    @InjectMocks
-    private EmployeeService employeeService;
 
     private Employee employee;
 
     @BeforeEach
     void setUp() {
-        authenticationService = new AuthenticationService();
-
+        authenticationService = new AuthenticationService(
+                "testSecretKeyForJWTGenerationMustBeLongEnoughForSecureHS512Signing1234567890",
+                3600000L
+        );
+        
         employee = new Employee();
         employee.setEmployeeId(1);
         employee.setEmail("test@example.com");

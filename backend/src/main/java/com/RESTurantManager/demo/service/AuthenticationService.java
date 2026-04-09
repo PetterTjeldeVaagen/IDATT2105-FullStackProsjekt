@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.JwtException;
@@ -13,14 +14,18 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class AuthenticationService {
-    private static final String SECRET_KEY = "mySecretKeyForJWTGenerationMustBeLongEnoughForSecureHS512Signing1234567890";
-    private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    private final SecretKey secretKey;
+    private final long expirationTime;
 
+    public AuthenticationService(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") long expiration) {
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.expirationTime = expiration;
+    }
     public String getJWTToken(String email) {
         String token = Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 1))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(secretKey)
                 .compact();
         return token;

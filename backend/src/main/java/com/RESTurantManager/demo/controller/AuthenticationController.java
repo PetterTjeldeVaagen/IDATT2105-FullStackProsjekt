@@ -14,6 +14,8 @@ import com.RESTurantManager.demo.db.responses.LoginResponse;
 import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.service.EmployeeService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -26,18 +28,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             LoginResponse response = employeeService.login(loginRequest);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponse(e.getMessage()));
+                    .body(new LoginResponse("Invalid credentials"));
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<LoginResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
             Employee employee = new Employee();
             employee.setName(registerRequest.getUsername());

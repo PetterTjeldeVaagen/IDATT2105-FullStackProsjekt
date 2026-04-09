@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.RESTurantManager.demo.db.requests.LoginRequest;
 import com.RESTurantManager.demo.db.responses.LoginResponse;
+import com.RESTurantManager.demo.service.AuthenticationService;
 import com.RESTurantManager.demo.service.EmployeeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,6 +29,9 @@ class SecurityConfigTest {
 
     @MockitoBean
     private EmployeeService employeeService;
+
+    @MockitoBean
+    private AuthenticationService authenticationService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

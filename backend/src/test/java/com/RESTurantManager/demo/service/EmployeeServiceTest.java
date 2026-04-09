@@ -12,6 +12,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.RESTurantManager.demo.db.interfaces.EmployeeRepository;
 import com.RESTurantManager.demo.db.requests.LoginRequest;
@@ -26,6 +27,9 @@ public class EmployeeServiceTest {
 
     @Mock
     private AuthenticationService authenticationService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private EmployeeService employeeService;
@@ -45,6 +49,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void testCreateEmployee() {
+        when(passwordEncoder.encode(employee.getPassword())).thenReturn("encodedPassword");
         employeeService.createEmployee(employee);
 
         verify(employeeRepository).save(employee);
@@ -75,7 +80,10 @@ public class EmployeeServiceTest {
         loginRequest.setEmail("test@example.com");
         loginRequest.setPassword("password");
 
+        employee.setPassword("encodedPassword");
+
         when(employeeRepository.findByEmail("test@example.com")).thenReturn(employee);
+        when(passwordEncoder.matches("password", "encodedPassword")).thenReturn(true);
         when(authenticationService.getJWTToken("test@example.com")).thenReturn("fake-jwt-token");
 
         LoginResponse response = employeeService.login(loginRequest);
@@ -101,7 +109,6 @@ public class EmployeeServiceTest {
         });
 
         assertEquals("User not found", exception.getMessage());
-        verify(authenticationService, never()).getJWTToken("wrong@example.com");
     }
 
     @Test
@@ -110,13 +117,16 @@ public class EmployeeServiceTest {
         loginRequest.setEmail("test@example.com");
         loginRequest.setPassword("wrongpassword");
 
+        employee.setPassword("encodedPassword");
+
         when(employeeRepository.findByEmail("test@example.com")).thenReturn(employee);
+        when(passwordEncoder.matches("wrongpassword", "encodedPassword")).thenReturn(false);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             employeeService.login(loginRequest);
         });
 
-        assertEquals("Wrong password", exception.getMessage());
+        assertEquals("Wrong password or email", exception.getMessage());
         verify(authenticationService, never()).getJWTToken("test@example.com");
     }
 

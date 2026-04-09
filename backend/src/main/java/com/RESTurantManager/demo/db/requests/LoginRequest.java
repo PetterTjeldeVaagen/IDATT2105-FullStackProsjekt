@@ -1,7 +1,14 @@
 package com.RESTurantManager.demo.db.requests;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginRequest {
+    @NotBlank
     private String password;
+
+    @Email
+    @NotBlank
     private String email;
 
     public LoginRequest() {}

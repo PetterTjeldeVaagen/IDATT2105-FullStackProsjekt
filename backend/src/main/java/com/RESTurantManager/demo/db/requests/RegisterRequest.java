@@ -1,8 +1,19 @@
 package com.RESTurantManager.demo.db.requests;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class RegisterRequest {
+    @NotBlank
     private String username;
+
+    @NotBlank
+    @Size(min = 6)
     private String password;
+
+    @Email
+    @NotBlank
     private String email;
 
     public RegisterRequest() {}

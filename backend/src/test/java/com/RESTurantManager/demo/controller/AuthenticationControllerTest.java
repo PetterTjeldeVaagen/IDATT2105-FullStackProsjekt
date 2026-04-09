@@ -39,7 +39,7 @@ class AuthenticationControllerTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    @DisplayName("POST /auth/login should return 200 and login response when credentials are valid")
+    @DisplayName("login should return 200 and login response when credentials are valid")
     void successfulLoginTest() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setEmail("test@example.com");
@@ -69,7 +69,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /auth/register should return 200 when registration succeeds")
+    @DisplayName("register should return 200 when registration succeeds")
     void successfulRegisterTest() throws Exception {
         RegisterRequest request = new RegisterRequest();
         request.setUsername("New User");

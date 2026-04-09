@@ -1,5 +1,6 @@
 package com.RESTurantManager.demo.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.RESTurantManager.demo.db.interfaces.EmployeeRepository;
@@ -11,13 +12,19 @@ import com.RESTurantManager.demo.model.Employee;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final AuthenticationService authenticationService;
+    private final PasswordEncoder passwordEncoder;
 
-    public EmployeeService(EmployeeRepository employeeRepository, AuthenticationService authenticationService) {
+    public EmployeeService(EmployeeRepository employeeRepository, AuthenticationService authenticationService, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.authenticationService = authenticationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void createEmployee(Employee employee) {
+        if(employee.getPassword() == null || employee.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employeeRepository.save(employee);
     }
 
@@ -38,8 +45,8 @@ public class EmployeeService {
             throw new IllegalArgumentException("User not found");
         }
 
-        if (!password.equals(existing.getPassword())) {
-            throw new IllegalArgumentException("Wrong password");
+        if (!passwordEncoder.matches(password, existing.getPassword()) || existing == null) {
+            throw new IllegalArgumentException("Wrong password or email");
         }
 
         return new LoginResponse(

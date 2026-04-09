@@ -32,7 +32,7 @@ public class EmployeeController {
                                             employeeRequest.getPassword(), employeeRequest.getResturantId());
         employeeService.createEmployee(employee);
         EmployeeResponse employeeResponse = new EmployeeResponse(employee.getName(), employee.getEmail(), employee.getPhoneNumber(), 
-                                                                 employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
+                                                                 employee.getResturantId(), employee.getRole(), employee.getEmployeeId());
         return ResponseEntity.ok(employeeResponse);
     }
 
@@ -46,7 +46,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponse> getEmployee(@PathVariable int employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
         EmployeeResponse employeeResponse = new EmployeeResponse(employee.getName(), employee.getEmail(), employee.getPhoneNumber(), 
-                                                                 employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
+                                                                 employee.getResturantId(), employee.getRole(), employee.getEmployeeId());
         return ResponseEntity.ok(employeeResponse);
     }
 
@@ -57,7 +57,7 @@ public class EmployeeController {
         for (int i = 0; i < employees.length; i++) {
             Employee employee = employees[i];
             employeeResponses[i] = new EmployeeResponse(employee.getName(), employee.getEmail(), employee.getPhoneNumber(), 
-                                                        employee.getResturantId(), employee.getRole(), employee.getEmployeeId(), employee.getPassword());
+                                                        employee.getResturantId(), employee.getRole(), employee.getEmployeeId());
         }
         return ResponseEntity.ok(employeeResponses);
     }
