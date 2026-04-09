@@ -101,8 +101,8 @@ jobs:
           mkdir -p site/jacoco
           mkdir -p site/javadoc
 
-          cp -r downloaded/jacoco/* site/jacoco/ || true
-          cp -r downloaded/apidocs/* site/javadoc/ || true
+          cp -r downloaded/site/jacoco/* site/jacoco/ || true
+          cp -r downloaded/reports/apidocs/* site/javadoc/ || true
 
           cat > site/index.html <<'EOF'
           <!doctype html>
