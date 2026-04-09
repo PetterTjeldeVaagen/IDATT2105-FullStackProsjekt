@@ -7,11 +7,18 @@ import org.springframework.stereotype.Repository;
 import com.RESTurantManager.demo.db.interfaces.DeviationRepository;
 import com.RESTurantManager.demo.model.Deviation;
 
+/**
+ * Repository class for managing deviations in the database.
+ */
 @Repository
 public class JdbcDeviationRepository implements DeviationRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Saves a new deviation to the database.
+     * @param deviation the deviation to be saved
+     */
     @Override
     public void save(Deviation deviation) {
         jdbcTemplate.update(
@@ -23,6 +30,11 @@ public class JdbcDeviationRepository implements DeviationRepository {
         );
     }
 
+    /**
+     * Finds a deviation by its ID.
+     * @param id the ID of the deviation
+     * @return the deviation with the specified ID
+     */
     @Override
     public Deviation findById(int id) {
         return jdbcTemplate.queryForObject(
@@ -45,11 +57,19 @@ public class JdbcDeviationRepository implements DeviationRepository {
         );
     }
 
+    /**
+     * Deletes a deviation by its ID.
+     * @param id the ID of the deviation to be deleted
+     */
     @Override
     public void deleteById(int id) {
         jdbcTemplate.update("DELETE FROM deviations WHERE deviation_id = ?", id);
     }
 
+    /**
+     * Updates an existing deviation in the database.
+     * @param deviation the deviation to be updated
+     */
     @Override
     public void update(Deviation deviation) {
         jdbcTemplate.update(
@@ -62,6 +82,11 @@ public class JdbcDeviationRepository implements DeviationRepository {
         );
     }
 
+    /** 
+     * Finds deviations by the ID of the employee who registered them.
+     * @param employeeId the ID of the employee
+     * @return an array of deviations registered by the specified employee
+     */
     @Override
     public Deviation[] findByEmployeeId(int employeeId) {
         return jdbcTemplate.query(

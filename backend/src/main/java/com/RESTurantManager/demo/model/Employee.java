@@ -2,6 +2,9 @@ package com.RESTurantManager.demo.model;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing an employee. Contains fields for employee details such as name, employee ID, email, phone number, training courses, role, restaurant ID, and password.
+ */
 public class Employee {
     private String name;
     private int employeeId;
@@ -12,8 +15,22 @@ public class Employee {
     private Integer resturantId;
     private String password;
 
+    /**
+     * Default constructor for Employee.
+     */
     public Employee() { }
     
+    /**
+     * Parameterized constructor for Employee.
+     * @param name the name of the employee
+     * @param employeeId the unique ID of the employee
+     * @param email the email address of the employee
+     * @param phoneNumber the phone number of the employee
+     * @param training a list of courses completed by the employee
+     * @param role the role of the employee in the restaurant
+     * @param password the password for the employee's account
+     * @param resturantId the ID of the restaurant the employee is associated with
+     */
     public Employee(String name, int employeeId, String email, String phoneNumber, ArrayList<Course> training, String role, String password, Integer resturantId) {
         this.name = name;
         this.employeeId = employeeId;
@@ -66,6 +83,10 @@ public class Employee {
         this.training = training;
     }
 
+    /**
+     * Adds a course to the employee's training list.
+     * @param course the course to be added to the employee's training
+     */
     public void addCourse(Course course) {
         this.training.add(course);
     }

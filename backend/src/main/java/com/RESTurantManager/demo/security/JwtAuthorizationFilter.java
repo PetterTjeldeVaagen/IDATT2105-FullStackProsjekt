@@ -15,15 +15,32 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Filter class for JWT authorization. Intercepts incoming HTTP requests and checks for a valid JWT token in the Authorization header.
+ * If a valid token is found, it sets the authentication in the SecurityContext.
+ */
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final AuthenticationService authenticationService;
 
+    /**
+     * Constructor for JwtAuthorizationFilter.
+     * @param authenticationService the service for validating JWT tokens and extracting user information
+     */
     public JwtAuthorizationFilter(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
+    /**
+     * Filters incoming HTTP requests and checks for a valid JWT token in the Authorization header.
+     * If a valid token is found, it sets the authentication in the SecurityContext.
+     * @param request the incoming HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain to pass the request and response to the next filter in the chain
+     * @throws ServletException if an error occurs during filtering
+     * @throws IOException if an I/O error occurs during filtering
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 

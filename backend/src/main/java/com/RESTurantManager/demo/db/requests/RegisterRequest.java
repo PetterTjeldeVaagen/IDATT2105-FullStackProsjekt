@@ -4,6 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Request class for registration. Contains fields for username, password and email.
+ */
 public class RegisterRequest {
     @NotBlank
     private String username;
@@ -16,8 +19,17 @@ public class RegisterRequest {
     @NotBlank
     private String email;
 
+    /**
+     * Default constructor for RegisterRequest.
+     */    
     public RegisterRequest() {}
 
+    /**
+     * Parameterized constructor for RegisterRequest.
+     * @param username the username of the user
+     * @param password the password of the user
+     * @param email the email of the user
+     */
     public RegisterRequest(String username, String password, String email) {
         this.username = username;
         this.password = password;

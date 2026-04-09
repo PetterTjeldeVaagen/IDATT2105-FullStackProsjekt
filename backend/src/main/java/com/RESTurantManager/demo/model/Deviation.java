@@ -2,6 +2,9 @@ package com.RESTurantManager.demo.model;
 
 import java.util.Date;
 
+/**
+ * Model class representing a deviation reported by an employee. Contains fields for deviation details such as name, deviation ID, description, the employee who registered the deviation, and the date it was registered.
+ */
 public class Deviation {
     private String name;
     private int deviationId;
@@ -9,10 +12,20 @@ public class Deviation {
     private Employee registeredBy;
     private Date dateRegistered;
 
+    /**
+     * Default constructor for Deviation.
+     */
     public Deviation() {
         this.deviationId = 0; 
     }
     
+    /**
+     * Parameterized constructor for Deviation.
+     * @param name the name of the deviation
+     * @param description a brief description of the deviation
+     * @param registeredBy the employee who registered the deviation
+     * @param dateRegistered the date when the deviation was registered
+     */
     public Deviation(String name, String description, Employee registeredBy, Date dateRegistered) {
         this.name = name;
         this.description = description;

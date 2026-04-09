@@ -7,11 +7,18 @@ import org.springframework.stereotype.Repository;
 import com.RESTurantManager.demo.db.interfaces.CourseRepository;
 import com.RESTurantManager.demo.model.Course;
 
+/**
+ * Repository implementation for managing Course entities using JDBC. Provides methods for saving, finding, deleting, and updating courses in the database.
+ */
 @Repository
 public class JdbcCourseRepository implements CourseRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Saves a new course to the database.
+     * @param course the course to be saved
+     */
     @Override
     public void save(Course course) {
         jdbcTemplate.update(
@@ -26,6 +33,11 @@ public class JdbcCourseRepository implements CourseRepository {
         );
     }
 
+    /**
+     * Finds a course by its ID.
+     * @param id the ID of the course
+     * @return the course with the specified ID
+     */
     @Override
     public Course findById(int id) {
         return jdbcTemplate.queryForObject(
@@ -48,11 +60,19 @@ public class JdbcCourseRepository implements CourseRepository {
         );
     }
 
+    /**
+     * Deletes a course by its ID.
+     * @param id the ID of the course to be deleted
+     */
     @Override
     public void deleteById(int id) {
         jdbcTemplate.update("DELETE FROM courses WHERE course_id = ?", id);
     }
 
+    /**
+     * Updates an existing course in the database.
+     * @param course the course to be updated
+     */
     @Override
     public void update(Course course) {
         jdbcTemplate.update(
@@ -67,6 +87,11 @@ public class JdbcCourseRepository implements CourseRepository {
         );
     }
 
+    /**
+     * Finds courses by the ID of the associated employee.
+     * @param employeeId the ID of the employee
+     * @return an array of courses associated with the specified employee ID
+     */
     @Override
     public Course[] findByEmployeeId(int employeeId) {
         return jdbcTemplate.query(
@@ -89,6 +114,11 @@ public class JdbcCourseRepository implements CourseRepository {
         ).toArray(new Course[0]);
     }
 
+    /**
+     * Finds courses by the ID of the associated restaurant.
+     * @param resturantId the ID of the restaurant
+     * @return an array of courses associated with the specified restaurant ID
+     */
     @Override
     public Course[] getCoursesByResturantId(int resturantId) {
         return jdbcTemplate.query(

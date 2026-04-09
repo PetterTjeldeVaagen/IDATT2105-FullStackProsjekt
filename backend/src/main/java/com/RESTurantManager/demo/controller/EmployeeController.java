@@ -15,16 +15,28 @@ import com.RESTurantManager.demo.db.responses.EmployeeResponse;
 import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.service.EmployeeService;
 
+/**
+ * Controller for handling employee related endpoints such as creating, updating, deleting and retrieving employees.
+ */
 @RestController
 @RequestMapping("/employee")
 @CrossOrigin(origins = "http://localhost:5173")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
+    /**
+     * Constructor for EmployeeController.
+     * @param employeeService the service for managing employee operations
+     */
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
+    /**
+     * Endpoint for creating a new employee.
+     * @param employeeRequest the request containing employee details
+     * @return ResponseEntity containing the created employee response
+     */
     @PostMapping("/createEmployee")
     public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         Employee employee = new Employee(employeeRequest.getName(), employeeRequest.getEmployeeId(), employeeRequest.getEmail(), 
@@ -36,12 +48,22 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeResponse);
     }
 
+    /**
+     * Endpoint for deleting an employee by its ID.
+     * @param employeeId the ID of the employee to be deleted
+     * @return ResponseEntity indicating the result of the delete operation
+     */
     @DeleteMapping("/deleteEmployee/{employeeId}")
     public ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable int employeeId) {
         employeeService.deleteEmployeeById(employeeId);
          return ResponseEntity.ok().build();
     }
 
+    /**
+     * Endpoint for retrieving an employee by its ID.
+     * @param employeeId the ID of the employee to be retrieved
+     * @return ResponseEntity containing the retrieved employee response
+     */
     @GetMapping("/getEmployee/{employeeId}")
     public ResponseEntity<EmployeeResponse> getEmployee(@PathVariable int employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
@@ -50,6 +72,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeResponse);
     }
 
+    /**
+     * Endpoint for retrieving employees by restaurant ID.
+     * @param resturantId the ID of the restaurant whose employees are to be retrieved
+     * @return ResponseEntity containing the retrieved employees response
+     */
     @GetMapping("/getEmployeesByResturant/{resturantId}")
     public ResponseEntity<EmployeeResponse[]> getEmployeesByResturantId(@PathVariable int resturantId) {
         Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);

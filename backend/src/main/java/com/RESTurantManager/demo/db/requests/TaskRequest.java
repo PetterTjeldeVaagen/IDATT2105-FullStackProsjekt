@@ -4,6 +4,10 @@ import java.util.Date;
 
 import com.RESTurantManager.demo.model.RecurringFrequency;
 
+/**
+ * Request class for creating or updating a task. Contains fields for task details such as 
+ * name, description, finish by date, recurring frequency, assigned employee ID, status and category.
+ */
 public class TaskRequest {
     private String name;
     private Integer taskId;
@@ -15,8 +19,23 @@ public class TaskRequest {
     private String status;
     private String category;
 
+    /**
+     * Default constructor for TaskRequest.
+     */
     public TaskRequest() { }
 
+    /**
+     * Parameterized constructor for TaskRequest.
+     * @param name the name of the task
+     * @param taskId the ID of the task
+     * @param description a brief description of the task
+     * @param finishBy the date by which the task should be completed
+     * @param recurringFrequency the frequency at which the task recurs (if applicable)
+     * @param recurring whether the task is recurring or not
+     * @param assignedTo the ID of the employee to whom the task is assigned
+     * @param status the current status of the task
+     * @param category the category of the task
+     */
     public TaskRequest(String name, Integer taskId, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Integer assignedTo, String status, String category) {
         this.name = name;
         this.taskId = taskId;

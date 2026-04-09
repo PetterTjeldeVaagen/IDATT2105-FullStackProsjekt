@@ -7,11 +7,18 @@ import org.springframework.stereotype.Repository;
 import com.RESTurantManager.demo.db.interfaces.TaskRepository;
 import com.RESTurantManager.demo.model.Task;
 
+/**
+ * Repository class for managing tasks in the database.
+ */
 @Repository
 public class JdbcTaskRepository implements TaskRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Saves a task to the database.
+     * @param task the task to be saved
+     */
     @Override
     public void save(Task task) {
         jdbcTemplate.update(
@@ -27,6 +34,11 @@ public class JdbcTaskRepository implements TaskRepository {
         );
     }
 
+    /**
+     * Finds a task by its ID.
+     * @param id the ID of the task
+     * @return the task with the specified ID
+     */
     @Override
     public Task findById(int id) {
         return jdbcTemplate.queryForObject(
@@ -56,11 +68,20 @@ public class JdbcTaskRepository implements TaskRepository {
         );
     }
 
+    /**
+     * Deletes a task by its ID.
+     * @param id the ID of the task to be deleted
+     */
     @Override
     public void deleteById(int id) {
         jdbcTemplate.update("DELETE FROM tasks WHERE task_id = ?", id);
     }
 
+    /**
+     * Retrieves all tasks assigned to a specific employee.
+     * @param employeeId the ID of the employee
+     * @return an array of tasks assigned to the specified employee
+     */
     @Override
     public Task[] findByEmployeeId(int employeeId) {
         return jdbcTemplate.query(
@@ -86,6 +107,11 @@ public class JdbcTaskRepository implements TaskRepository {
                 employeeId
         ).toArray(new Task[0]);
     }
+
+    /**
+     * Updates an existing task in the database.
+     * @param task the task to be updated
+     */
     @Override
     public void update(Task task) {
         jdbcTemplate.update(

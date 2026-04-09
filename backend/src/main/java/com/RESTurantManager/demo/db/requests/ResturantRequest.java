@@ -1,13 +1,25 @@
 package com.RESTurantManager.demo.db.requests;
 
+/**
+ * Request class for restaurant. Contains fields for restaurant details such as name, restaurant ID, employee ID and join code.
+ */
 public class ResturantRequest {
     private String name;
     private int resturantId;
     private int employeeId;
     private String joinCode;
 
+    /**
+     * Default constructor for ResturantRequest.
+     */
     public ResturantRequest() { }
 
+    /**
+     * Parameterized constructor for ResturantRequest.
+     * @param name the name of the restaurant
+     * @param employeeId the ID of the employee associated with the restaurant
+     * @param joinCode the join code for the restaurant
+     */
     public ResturantRequest(String name, int employeeId, String joinCode) {
         this.name = name;
         this.employeeId = employeeId;

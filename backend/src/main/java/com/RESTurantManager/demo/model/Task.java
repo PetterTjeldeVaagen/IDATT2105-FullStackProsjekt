@@ -2,6 +2,9 @@ package com.RESTurantManager.demo.model;
 
 import java.util.Date;
 
+/**
+ * Model class representing a task assigned to an employee. Contains fields for task details such as name, task ID, description, finish by date, recurring frequency, whether the task is recurring, the employee assigned to the task, status, and category.
+ */
 public class Task {
     private String name;
     private int taskId;
@@ -13,8 +16,21 @@ public class Task {
     private String status;
     private String category;
 
+    /**
+     * Default constructor for Task.
+     */
     public Task() { }
 
+    /**
+     * Parameterized constructor for Task.
+     * @param name the name of the task
+     * @param description a brief description of the task
+     * @param finishBy the date by which the task should be completed
+     * @param recurringFrequency the frequency at which the task recurs (if applicable)
+     * @param recurring whether the task is recurring or not
+     * @param assignedTo the employee to whom the task is assigned
+     * @param category the category of the task (e.g., "CLEANING", "MAINTENANCE", etc.)
+     */
     public Task(String name, String description, Date finishBy, RecurringFrequency recurringFrequency, Boolean recurring, Employee assignedTo, String category) {
         this.name = name;
         this.description = description;

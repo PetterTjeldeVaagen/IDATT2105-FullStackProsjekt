@@ -20,6 +20,9 @@ import com.RESTurantManager.demo.model.Employee;
 import com.RESTurantManager.demo.service.DeviationService;
 import com.RESTurantManager.demo.service.EmployeeService;
 
+/**
+ * Controller for handling deviation related endpoints such as creating, updating, deleting and retrieving deviations.
+ */
 @RestController
 @RequestMapping("/deviation")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -27,11 +30,21 @@ public class DeviationController {
     private final DeviationService deviationService;
     private final EmployeeService employeeService;
 
+    /**
+     * Constructor for DeviationController.
+     * @param deviationService the service for managing deviation operations
+     * @param employeeService the service for managing employee operations
+     */
     public DeviationController(DeviationService deviationService, EmployeeService employeeService) {
         this.deviationService = deviationService;
         this.employeeService = employeeService;
     }
 
+    /**
+     * Endpoint for creating a new deviation.
+     * @param deviationRequest the request containing deviation details
+     * @return ResponseEntity containing the created deviation response
+     */
     @PostMapping("/createDeviation") 
     public ResponseEntity<DeviationResponse> createDeviation(@RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
@@ -43,12 +56,22 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponse);
     }
 
+    /**
+     * Endpoint for deleting a deviation by its ID.
+     * @param deviationId the ID of the deviation to be deleted
+     * @return ResponseEntity indicating the result of the delete operation
+     */
     @DeleteMapping("/deleteDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> deleteDeviation(@PathVariable int deviationId) {
         deviationService.deleteDeviationById(deviationId);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Endpoint for retrieving a deviation by its ID.
+     * @param deviationId the ID of the deviation to be retrieved
+     * @return ResponseEntity containing the retrieved deviation response
+     */
     @GetMapping("/getDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> getDeviation(@PathVariable int deviationId) {
         Deviation deviation = deviationService.getDeviationById(deviationId);
@@ -57,6 +80,11 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponse);
     }
 
+    /**
+     * Endpoint for retrieving deviations by employee ID.
+     * @param employeeId the ID of the employee whose deviations are to be retrieved
+     * @return ResponseEntity containing the retrieved deviations response
+     */
     @GetMapping("/getDeviationByEmployee/{employeeId}")
     public ResponseEntity<DeviationResponse[]> getDeviationsByEmployeeId(@PathVariable int employeeId) {
         Deviation[] deviations = deviationService.getDeviationsByEmployeeId(employeeId);
@@ -70,6 +98,11 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponses);
     }
 
+    /**
+     * Endpoint for retrieving deviations by restaurant ID.
+     * @param restaurantId the ID of the restaurant whose deviations are to be retrieved
+     * @return ResponseEntity containing the retrieved deviations response
+     */
     @GetMapping("/getDeviationByResturant/{resturantId}")
     public ResponseEntity<DeviationResponse[]> getDeviationsByResturantId(@PathVariable int resturantId) {
         Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
@@ -88,6 +121,12 @@ public class DeviationController {
         return ResponseEntity.ok(deviationResponses);
     }
 
+    /**
+     * Endpoint for updating a deviation by its ID.
+     * @param deviationId the ID of the deviation to be updated
+     * @param deviationRequest the request containing updated deviation details
+     * @return ResponseEntity indicating the result of the update operation
+     */
     @PostMapping("/updateDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> updateDeviation(@PathVariable int deviationId, @RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());

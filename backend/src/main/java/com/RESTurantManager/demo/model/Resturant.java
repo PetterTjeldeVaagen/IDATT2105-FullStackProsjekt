@@ -2,6 +2,9 @@ package com.RESTurantManager.demo.model;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a restaurant. Contains fields for restaurant details such as name, restaurant ID, join code, employees, managers, checklist tasks, categories, and registered deviations.
+ */
 public class Resturant {
     private String name;
     private int resturantId;
@@ -12,8 +15,18 @@ public class Resturant {
     private ArrayList<String> categories;
     private ArrayList<Deviation> registeredDeviations;
 
+    /**
+     * Default constructor for Resturant.
+     */
     public Resturant() { }
     
+    /**
+     * Parameterized constructor for Resturant.
+     * @param name the name of the restaurant
+     * @param resturantId the unique ID of the restaurant
+     * @param manager the initial manager of the restaurant
+     * @param joinCode the code used for employees to join the restaurant
+     */
     public Resturant(String name, int resturantId, Employee manager, String joinCode) {
         this.name = name;
         this.resturantId = resturantId;
@@ -83,22 +96,42 @@ public class Resturant {
         this.registeredDeviations = registeredDeviations;
     }
 
+    /**
+     * Adds an employee to the restaurant's employee list.
+     * @param employee the employee to be added to the restaurant
+     */
     public void addEmployee(Employee employee) {
         this.employees.add(employee);
     }
 
+    /**
+     * Adds a manager to the restaurant's manager list.
+     * @param manager the manager to be added to the restaurant
+     */
     public void addManager(Employee manager) {
         this.managers.add(manager);
     }
 
+    /**
+     * Adds a task to the restaurant's checklist.
+     * @param task the task to be added to the restaurant's checklist
+     */
     public void addTask(Task task) {
         this.checklist.add(task);
     }
 
+    /**
+     * Adds a category to the restaurant's category list.
+     * @param category the category to be added to the restaurant's category list
+     */
     public void addCategory(String category) {
         this.categories.add(category);
     }
 
+    /**
+     * Adds a deviation to the restaurant's registered deviations list.
+     * @param deviation the deviation to be added to the restaurant's registered deviations list
+     */
     public void addDeviation(Deviation deviation) {
         this.registeredDeviations.add(deviation);
     }
