@@ -21,6 +21,21 @@ Made by Petter Tjelde Vaagen
 - Spring JDBC / JPA
 - JWT authentication
 
+### Test Credentials
+<br>
+    Normal employee
+<br>
+    Email - ola@test.no
+<br>
+    Password - pass123
+<br>
+<br>
+    Manager
+<br>
+    Email - kari@test.no
+<br>
+    Password - pass123
+
 ### Documentation
 - [Javadoc](https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
 - [Tests](https://blinkendelys.com/IDATT2105-FullStackProsjekt/jacoco/index.html)
