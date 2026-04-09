@@ -100,7 +100,7 @@ public class DeviationController {
 
     /**
      * Endpoint for retrieving deviations by restaurant ID.
-     * @param restaurantId the ID of the restaurant whose deviations are to be retrieved
+     * @param resturantId the ID of the restaurant whose deviations are to be retrieved
      * @return ResponseEntity containing the retrieved deviations response
      */
     @GetMapping("/getDeviationByResturant/{resturantId}")

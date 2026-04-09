@@ -89,7 +89,7 @@ public class CourseController {
 
     /**
      * Endpoint for retrieving courses by restaurant ID.
-     * @param restaurantId the ID of the restaurant whose courses are to be retrieved
+     * @param resturantId the ID of the restaurant whose courses are to be retrieved
      * @return ResponseEntity containing the retrieved courses response
      */
     @GetMapping("/getCoursesByResturant/{resturantId}")

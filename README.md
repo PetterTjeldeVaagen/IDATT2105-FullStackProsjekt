@@ -22,8 +22,8 @@ Made by Petter Tjelde Vaagen
 - JWT authentication
 
 ### Documentation
-- Javadoc
-- Tests
+- [Javadoc] (https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
+- [Tests](https://blinkendelys.com/IDATT2105-FullStackProsjekt/jacoco/index.html)
 - Endpoints
 - Class diagram
 
