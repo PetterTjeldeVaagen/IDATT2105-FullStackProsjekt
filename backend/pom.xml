@@ -140,23 +140,38 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>-Dspring.application.admin.enabled=true</jvmArguments>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>start</goal>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>org.springdoc</groupId>
 				<artifactId>springdoc-openapi-maven-plugin</artifactId>
 				<version>1.5</version>
 				<executions>
 					<execution>
-						<id>generate-openapi-docs</id>
-						<phase>verify</phase>
+						<id>integration-test</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
-						<configuration>
-							<apiDocsUrl>http://localhost:8080/v3/api-docs</apiDocsUrl>
-							<outputFileName>openapi.json</outputFileName>
-							<outputDir>${project.build.directory}/generated-docs</outputDir>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<apiDocsUrl>http://localhost:8080/v3/api-docs</apiDocsUrl>
+					<outputFileName>openapi.json</outputFileName>
+					<outputDir>${project.build.directory}/generated-docs</outputDir>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
