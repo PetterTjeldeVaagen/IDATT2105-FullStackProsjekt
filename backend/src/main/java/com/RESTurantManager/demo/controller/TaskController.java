@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.TaskRequest;
 import com.RESTurantManager.demo.db.responses.TaskResponse;
@@ -27,6 +33,7 @@ import com.RESTurantManager.demo.service.TaskService;
 @RestController
 @RequestMapping("/task")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "TaskController", description = "Controller for handling task related endpoints such as creating, updating, deleting and retrieving tasks.")
 public class TaskController {
     private final TaskService taskService;
     private final EmployeeService employeeService;
@@ -46,6 +53,7 @@ public class TaskController {
      * @param taskRequest the request containing task details
      * @return ResponseEntity containing the created task response
      */
+    @Operation(summary = "Create a new task")
     @PostMapping("/createTask")
     public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
         Task task = new Task(taskRequest.getName(), taskRequest.getDescription(),
@@ -64,6 +72,7 @@ public class TaskController {
      * @param taskId the ID of the task to be deleted
      * @return ResponseEntity indicating the result of the delete operation
      */
+    @Operation(summary = "Delete a task by its ID")
     @DeleteMapping("/deleteTask/{taskId}")
     public ResponseEntity<TaskResponse> deleteTask(@PathVariable int taskId) {
         taskService.deleteTaskById(taskId);
@@ -75,6 +84,7 @@ public class TaskController {
      * @param taskId the ID of the task to be retrieved
      * @return ResponseEntity containing the retrieved task response
      */
+    @Operation(summary = "Get a task by its ID")
     @GetMapping("/getTask/{taskId}")
     public ResponseEntity<TaskResponse> getTask(@PathVariable int taskId) {
         Task task = taskService.getTaskById(taskId);
@@ -89,6 +99,7 @@ public class TaskController {
      * @param employeeId the ID of the employee whose tasks are to be retrieved
      * @return ResponseEntity containing the retrieved tasks response
      */
+    @Operation(summary = "Get tasks by employee ID")
     @GetMapping("/getTaskByEmployee/{employeeId}")
     public ResponseEntity<TaskResponse[]> getTasksByEmployee(@PathVariable int employeeId) {
         Task[] tasks = taskService.getTasksByEmployeeId(employeeId);
@@ -107,6 +118,7 @@ public class TaskController {
      * @param resturantId the ID of the restaurant whose tasks are to be retrieved
      * @return ResponseEntity containing the retrieved tasks response
      */
+    @Operation(summary = "Get tasks by restaurant ID")
     @GetMapping("/getTasksByResturant/{resturantId}")
     public ResponseEntity<TaskResponse[]> getTasksByResturant(@PathVariable int resturantId) {
         Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
@@ -131,6 +143,7 @@ public class TaskController {
      * @param taskRequest the request containing updated task details
      * @return ResponseEntity containing the updated task response
      */
+    @Operation(summary = "Update a task by its ID")
     @PutMapping("/updateTask/{taskId}")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable int taskId, @RequestBody TaskRequest taskRequest) {
         Task task = taskService.updateTask(taskId, taskRequest);

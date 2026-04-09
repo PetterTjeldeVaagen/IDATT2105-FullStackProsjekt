@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.CourseRequest;
 import com.RESTurantManager.demo.db.responses.CourseResponse;
@@ -21,6 +27,7 @@ import com.RESTurantManager.demo.service.CourseService;
 @RestController
 @RequestMapping("/course")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "CourseController", description = "Controller for handling course related endpoints such as creating, updating, deleting and retrieving courses.")
 public class CourseController {
     private final CourseService courseService;
 
@@ -37,6 +44,13 @@ public class CourseController {
      * @param courseRequest the request containing course details
      * @return ResponseEntity containing the created course response
      */
+    @Operation(summary = "Create a new course")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Course created successfully", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = CourseResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid course data", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = CourseResponse.class)))
+    })
     @PostMapping("/createCourse")
     public ResponseEntity<CourseResponse> createCourse(@RequestBody CourseRequest courseRequest) {
         Course course = new Course(courseRequest.getName(),  
@@ -52,6 +66,11 @@ public class CourseController {
      * @param courseId the ID of the course to be deleted
      * @return ResponseEntity indicating the result of the delete operation
      */
+    @Operation(summary = "Delete a course by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Course deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Course not found")
+    })
     @DeleteMapping("/deleteCourse/{courseId}")
     public ResponseEntity<CourseResponse> deleteCourse(@PathVariable int courseId) {
         courseService.deleteCourseById(courseId);
@@ -63,6 +82,13 @@ public class CourseController {
      * @param courseId the ID of the course to be retrieved
      * @return ResponseEntity containing the retrieved course response
      */
+    @Operation(summary = "Get a course by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Course retrieved successfully", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = CourseResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Course not found", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = CourseResponse.class)))
+    })
     @GetMapping("/getCourse/{courseId}")
     public ResponseEntity<CourseResponse> getCourse(@PathVariable int courseId) {
         Course course = courseService.getCourseById(courseId);
@@ -76,6 +102,7 @@ public class CourseController {
      * @param employeeId the ID of the employee whose courses are to be retrieved
      * @return ResponseEntity containing the retrieved courses response
      */
+    @Operation(summary = "Get courses by employee ID")
     @GetMapping("/getCoursesByEmployee/{employeeId}")
     public ResponseEntity<CourseResponse[]> getCoursesByEmployeeId(@PathVariable int employeeId) {
         Course[] courses = courseService.getCoursesByEmployeeId(employeeId);
@@ -92,6 +119,7 @@ public class CourseController {
      * @param resturantId the ID of the restaurant whose courses are to be retrieved
      * @return ResponseEntity containing the retrieved courses response
      */
+    @Operation(summary = "Get courses by restaurant ID")
     @GetMapping("/getCoursesByResturant/{resturantId}")
     public ResponseEntity<CourseResponse[]> getCoursesByResturantId(@PathVariable int resturantId) {
         Course[] courses = courseService.getCoursesByResturantId(resturantId);
@@ -109,6 +137,7 @@ public class CourseController {
      * @param courseRequest the request containing updated course details
      * @return ResponseEntity indicating the result of the update operation
      */
+    @Operation(summary = "Update a course by its ID")
     @PostMapping("/updateCourse/{courseId}")
     public ResponseEntity<CourseResponse> updateCourse(@PathVariable int courseId, @RequestBody CourseRequest courseRequest) {
         Course course = new Course(courseRequest.getName(),

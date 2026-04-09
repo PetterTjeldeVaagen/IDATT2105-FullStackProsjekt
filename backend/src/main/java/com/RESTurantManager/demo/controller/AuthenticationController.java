@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.LoginRequest;
 import com.RESTurantManager.demo.db.requests.RegisterRequest;
@@ -22,6 +28,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "AuthenticationController", description = "Controller for handling authentication related endpoints such as login and registration.")
 public class AuthenticationController {
     private final EmployeeService employeeService;
 
@@ -38,6 +45,14 @@ public class AuthenticationController {
      * @param loginRequest the login request containing user credentials
      * @return ResponseEntity containing the login response
      */
+    @Operation(summary = "Login endpoint")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Login successful", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Invalid credentials", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Bad request")
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
@@ -54,6 +69,13 @@ public class AuthenticationController {
      * @param registerRequest the registration request containing user details
      * @return ResponseEntity containing the login response after successful registration
      */
+    @Operation(summary = "Register endpoint")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Registration successful", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Registration failed", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class)))
+    })
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {

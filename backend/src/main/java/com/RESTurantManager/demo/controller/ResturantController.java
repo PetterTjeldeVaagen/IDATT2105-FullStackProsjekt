@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.ResturantRequest;
 import com.RESTurantManager.demo.db.responses.ResturantResponse;
@@ -24,6 +30,7 @@ import com.RESTurantManager.demo.service.ResturantService;
 @RestController
 @RequestMapping("/resturant")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "ResturantController", description = "Controller for handling restaurant related endpoints such as creating a restaurant, adding/removing employees and managers, and retrieving restaurant information.")
 public class ResturantController {
     private final ResturantService resturantService;
     private final EmployeeService employeeService;
@@ -43,6 +50,7 @@ public class ResturantController {
      * @param resturantId the ID of the restaurant whose employees are to be retrieved
      * @return ResponseEntity containing the retrieved employees response
      */
+    @Operation(summary = "Get employees by restaurant ID")
     @GetMapping("/getEmployees/{resturantId}")
     public ResponseEntity<ArrayList<Employee>> getEmployeesByResturantId(@PathVariable int resturantId) {
         ArrayList<Employee> employees = resturantService.getEmployeesByResturantId(resturantId);
@@ -54,6 +62,7 @@ public class ResturantController {
      * @param resturantId the ID of the restaurant whose managers are to be retrieved
      * @return ResponseEntity containing the retrieved managers response
      */
+    @Operation(summary = "Get managers by restaurant ID")
     @GetMapping("/getManagers/{resturantId}")
     public ResponseEntity<ArrayList<Employee>> getManagersByResturantId(@PathVariable int resturantId) {
         ArrayList<Employee> managers = resturantService.getManagersByResturantId(resturantId);
@@ -65,6 +74,11 @@ public class ResturantController {
      * @param resturantRequest the request containing restaurant details
      * @return ResponseEntity indicating the result of the create operation
      */
+    @Operation(summary = "Create a new restaurant")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Restaurant created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid request")
+    })
     @PostMapping("/createResturant")
     public ResponseEntity<Void> createResturant(@RequestBody ResturantRequest resturantRequest) {
         String joinCode = JoinCodeGenerator.generateJoinCode();
@@ -77,6 +91,7 @@ public class ResturantController {
      * @param resturantRequest the request containing restaurant ID and employee ID
      * @return ResponseEntity indicating the result of the add operation
      */
+    @Operation(summary = "Add an employee to a restaurant")
     @PostMapping("/addEmployee")
     public ResponseEntity<Void> addEmployeeToResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.addEmployeeToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
@@ -88,6 +103,7 @@ public class ResturantController {
      * @param resturantRequest the request containing restaurant ID and employee ID
      * @return ResponseEntity indicating the result of the remove operation
      */
+    @Operation(summary = "Remove an employee from a restaurant")
     @PostMapping("/removeEmployee")
     public ResponseEntity<Void> removeEmployeeFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeEmployeeFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
@@ -99,6 +115,7 @@ public class ResturantController {
      * @param resturantRequest the request containing restaurant ID and manager ID
      * @return ResponseEntity indicating the result of the add operation
      */
+    @Operation(summary = "Add a manager to a restaurant")
     @PostMapping("/addManager")
     public ResponseEntity<Void> addManagerToResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.addManagerToResturant(resturantRequest.getResturantId(), employeeService.getEmployeeById(resturantRequest.getEmployeeId()));
@@ -110,6 +127,7 @@ public class ResturantController {
      * @param resturantRequest the request containing restaurant ID and manager ID
      * @return ResponseEntity indicating the result of the remove operation
      */
+    @Operation(summary = "Remove a manager from a restaurant")
     @PostMapping("/removeManager")
     public ResponseEntity<Void> removeManagerFromResturant(@RequestBody ResturantRequest resturantRequest) {
         resturantService.removeManagerFromResturant(resturantRequest.getResturantId(), resturantRequest.getEmployeeId());
@@ -121,6 +139,7 @@ public class ResturantController {
      * @param employeeId the ID of the employee whose restaurant is to be retrieved
      * @return ResponseEntity containing the retrieved restaurant response
      */
+    @Operation(summary = "Get a restaurant by employee ID")
     @GetMapping("/getResturantByEmployeeId/{employeeId}")
     public ResponseEntity<ResturantResponse> getResturantByEmployeeId(@PathVariable int employeeId) {
         ResturantResponse resturantResponse = resturantService.getResturantByEmployeeId(employeeId);
@@ -132,6 +151,7 @@ public class ResturantController {
      * @param resturantId the ID of the restaurant to be retrieved
      * @return ResponseEntity containing the retrieved restaurant response
      */
+    @Operation(summary = "Get a restaurant by its ID")
     @GetMapping("/getResturant/{resturantId}")
     public ResponseEntity<ResturantResponse> getResturantById(@PathVariable int resturantId) {
         ResturantResponse resturantResponse = resturantService.getResturantById(resturantId);
@@ -144,6 +164,7 @@ public class ResturantController {
      * @param employeeId the ID of the employee joining the restaurant
      * @return ResponseEntity indicating the result of the join operation
      */
+    @Operation(summary = "Join a restaurant using a join code")
     @PostMapping("/joinResturant/{joinCode}/{employeeId}")
     public ResponseEntity<Void> joinResturant(@PathVariable String joinCode, @PathVariable int employeeId) {
         resturantService.joinResturant(joinCode, employeeId);
@@ -155,6 +176,7 @@ public class ResturantController {
      * @param resturantId the ID of the restaurant whose join code is to be retrieved
      * @return ResponseEntity containing the retrieved join code
      */
+    @Operation(summary = "Get the join code of a restaurant by its ID")
     @GetMapping("/getJoinCode/{resturantId}")
     public ResponseEntity<String> getJoinCode(@PathVariable int resturantId) {
         ResturantResponse resturantResponse = resturantService.getResturantById(resturantId);

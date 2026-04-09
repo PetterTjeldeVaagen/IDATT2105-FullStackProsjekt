@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.RESTurantManager.demo.db.requests.DeviationRequest;
 import com.RESTurantManager.demo.db.responses.DeviationResponse;
@@ -26,6 +32,7 @@ import com.RESTurantManager.demo.service.EmployeeService;
 @RestController
 @RequestMapping("/deviation")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(name = "DeviationController", description = "Controller for handling deviation related endpoints such as creating, updating, deleting and retrieving deviations.")
 public class DeviationController {
     private final DeviationService deviationService;
     private final EmployeeService employeeService;
@@ -45,6 +52,13 @@ public class DeviationController {
      * @param deviationRequest the request containing deviation details
      * @return ResponseEntity containing the created deviation response
      */
+    @Operation(summary = "Create a new deviation")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Deviation created successfully", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = DeviationResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid deviation data", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = DeviationResponse.class)))
+    })
     @PostMapping("/createDeviation") 
     public ResponseEntity<DeviationResponse> createDeviation(@RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
@@ -61,6 +75,7 @@ public class DeviationController {
      * @param deviationId the ID of the deviation to be deleted
      * @return ResponseEntity indicating the result of the delete operation
      */
+    @Operation(summary = "Delete a deviation by its ID")
     @DeleteMapping("/deleteDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> deleteDeviation(@PathVariable int deviationId) {
         deviationService.deleteDeviationById(deviationId);
@@ -72,6 +87,14 @@ public class DeviationController {
      * @param deviationId the ID of the deviation to be retrieved
      * @return ResponseEntity containing the retrieved deviation response
      */
+    @Operation(summary = "Get a deviation by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Deviation retrieved successfully", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = DeviationResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Deviation not found", 
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = DeviationResponse.class)))
+    })
+
     @GetMapping("/getDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> getDeviation(@PathVariable int deviationId) {
         Deviation deviation = deviationService.getDeviationById(deviationId);
@@ -85,6 +108,7 @@ public class DeviationController {
      * @param employeeId the ID of the employee whose deviations are to be retrieved
      * @return ResponseEntity containing the retrieved deviations response
      */
+    @Operation(summary = "Get deviations by employee ID")
     @GetMapping("/getDeviationByEmployee/{employeeId}")
     public ResponseEntity<DeviationResponse[]> getDeviationsByEmployeeId(@PathVariable int employeeId) {
         Deviation[] deviations = deviationService.getDeviationsByEmployeeId(employeeId);
@@ -103,6 +127,7 @@ public class DeviationController {
      * @param resturantId the ID of the restaurant whose deviations are to be retrieved
      * @return ResponseEntity containing the retrieved deviations response
      */
+    @Operation(summary = "Get deviations by restaurant ID")
     @GetMapping("/getDeviationByResturant/{resturantId}")
     public ResponseEntity<DeviationResponse[]> getDeviationsByResturantId(@PathVariable int resturantId) {
         Employee[] employees = employeeService.getEmployeesByResturantId(resturantId);
@@ -127,6 +152,7 @@ public class DeviationController {
      * @param deviationRequest the request containing updated deviation details
      * @return ResponseEntity indicating the result of the update operation
      */
+    @Operation(summary = "Update a deviation by its ID")
     @PostMapping("/updateDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> updateDeviation(@PathVariable int deviationId, @RequestBody DeviationRequest deviationRequest) {
         Employee employee = employeeService.getEmployeeById(deviationRequest.getRegisteredBy());
