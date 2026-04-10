@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,7 +70,6 @@ public class TaskController {
      * @return ResponseEntity indicating the result of the delete operation
      */
     @Operation(summary = "Delete a task by its ID")
-    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/deleteTask/{taskId}")
     public ResponseEntity<TaskResponse> deleteTask(@PathVariable int taskId) {
         taskService.deleteTaskById(taskId);
@@ -143,7 +141,6 @@ public class TaskController {
      * @return ResponseEntity containing the updated task response
      */
     @Operation(summary = "Update a task by its ID")
-    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/updateTask/{taskId}")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable int taskId, @RequestBody TaskRequest taskRequest) {
         Task task = taskService.updateTask(taskId, taskRequest);

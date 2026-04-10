@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,7 +77,6 @@ public class DeviationController {
      * @return ResponseEntity indicating the result of the delete operation
      */
     @Operation(summary = "Delete a deviation by its ID")
-    @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/deleteDeviation/{deviationId}")
     public ResponseEntity<DeviationResponse> deleteDeviation(@PathVariable int deviationId) {
         deviationService.deleteDeviationById(deviationId);

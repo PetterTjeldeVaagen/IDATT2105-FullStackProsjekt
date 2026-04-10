@@ -12,7 +12,6 @@ Made by Petter Tjelde Vaagen
 - TypeScript
 - Vite
 - Vue Router
-- Pinia
 
 ### Backend
 - Java 21
@@ -35,6 +34,9 @@ Made by Petter Tjelde Vaagen
     Email - kari@test.no
 <br>
     Password - pass123
+    
+### Repository
+https://github.com/PetterTjeldeVaagen/IDATT2105-FullStackProsjekt
 
 ### Documentation
 - [Javadoc](https://blinkendelys.com/IDATT2105-FullStackProsjekt/javadoc/index.html)
